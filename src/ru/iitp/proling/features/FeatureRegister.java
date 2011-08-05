@@ -1,6 +1,5 @@
 package ru.iitp.proling.features;
 
-import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,32 +20,31 @@ import java.util.Map;
  *
  */
 public class FeatureRegister {
-	Map<String, Class<? extends Feature>> builders = new HashMap<String, Class<? extends Feature>>();
+	Map<String, FeatureDefinition> builders = new HashMap<String, FeatureDefinition>();
 	
 	public Feature build(String name, List<Value> values) {
-		Class<? extends Feature> c = builders.get(name);
-
-		if(c == null)
-			return null;
+		FeatureDefinition b = builders.get(name);
+		if(b != null)
+			return b.build(values);
 		
-		try {
-			Constructor<? extends Feature> ctor = c.getConstructor(Value[].class);
-			return ctor.newInstance(new Object[]{values.toArray(new Value[]{})});
-		} catch(Exception e) {
-			return null;
-		}
+		return null;
+	}
+	
+	public void register(String name, FeatureDefinition fb) {
+		builders.put(name, fb);
 	}
 	
 	public void register(String name, Class<? extends Feature> cls) {
-		builders.put(name, cls);
+		register(name, builderFor(cls));
 	}
 	
 	public boolean hasInjectedArg(String name) {
-		Class<? extends Feature> c = builders.get(name);
-		
-		if(c == null)
-			return false;
-		return Feature.Injectable.class.isAssignableFrom(c);
+		FeatureDefinition b = builders.get(name);
+		return b.hasInjectedArg();
+	}
+	
+	public static FeatureDefinition builderFor(final Class<? extends Feature> cls) {
+		return new FeatureDefinition.Class(cls);
 	}
 	
 	
