@@ -14,11 +14,11 @@ public class CommonFeatures {
 	 * @author Anton Kazennikov
 	 *
 	 */
-	public abstract static class SimpleFeature implements Feature {
+	public abstract static class Simple implements Feature {
 		final String name;
-		final Value[] args;
+		final List<Value> args;
 		
-		public SimpleFeature(String name, Value[] args) {
+		public Simple(String name, List<Value> args) {
 			this.name = name;
 			this.args = args;
 		}
@@ -28,20 +28,16 @@ public class CommonFeatures {
 			return name;
 		}
 		
-		public Object getObject() {
-			return args[0].get();
-		}
-
 		@Override
 		public List<Value> args() {
-			return Arrays.asList(args);
+			return args;
 		}
 
 		@Override
 		public int hashCode() {
 			final int prime = 31;
 			int result = 1;
-			result = prime * result + Arrays.hashCode(args);
+			result = prime * result + args.hashCode();
 			result = prime * result + ((name == null) ? 0 : name.hashCode());
 			return result;
 		}
@@ -52,14 +48,19 @@ public class CommonFeatures {
 				return true;
 			if (obj == null)
 				return false;
-			if (!(obj instanceof SimpleFeature))
+			if (!(obj instanceof Simple))
 				return false;
-			SimpleFeature other = (SimpleFeature) obj;
+			Simple other = (Simple) obj;
 			
 			return Objects.equal(name, other.name) 
-					&& Arrays.equals(args, other.args);//Objects.equal(args, other.args);
+					&& Objects.equal(args, other.args);//Objects.equal(args, other.args);
 					
 		}
+		
+		public Object getObject() {
+			return args.get(0).get();
+		}
+
 		
 		
 	}
@@ -73,21 +74,21 @@ public class CommonFeatures {
 	 * @author Anton Kazennikov
 	 *
 	 */
-	public static class LoFeature extends SimpleFeature {
+	public static class LowerCase extends Simple {
 
-		public LoFeature(Value[] args) {
+		public LowerCase(List<Value> args) {
 			super("lo", args);
 		}
 
 		@Override
 		public void eval(Value res) {
-			res.set(((String)args[0].get()).toLowerCase());
+			res.set(((String)args.get(0).get()).toLowerCase());
 		}
 		
 		@Override
 		public StringBuilder toStringBuilder(StringBuilder sb) {
 			sb.append(name()).append('(');
-			args[0].toStringBuilder(sb);
+			args.get(0).toStringBuilder(sb);
 			sb.append(')');
 			
 			return sb;
@@ -99,8 +100,8 @@ public class CommonFeatures {
 	 * @author Anton Kazennikov
 	 *
 	 */
-	public static class TupleFeature extends SimpleFeature {
-		public TupleFeature(Value[] args) {
+	public static class Tuple extends Simple {
+		public Tuple(List<Value> args) {
 			super("tuple", args);
 		}
 
