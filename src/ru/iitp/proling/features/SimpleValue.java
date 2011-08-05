@@ -2,15 +2,20 @@ package ru.iitp.proling.features;
 
 import com.google.common.base.Objects;
 
+/**
+ * Value object for POJOs
+ * @author Anton Kazennikov
+ *
+ */
 public class SimpleValue implements Value {
-	Object arg;
+	Object value;
 	
 	public SimpleValue() {
 		
 	}
 	
-	public SimpleValue(Object arg) {
-		this.arg = arg;
+	public SimpleValue(Object value) {
+		this.value = value;
 	}
 	
 	/* (non-Javadoc)
@@ -18,11 +23,11 @@ public class SimpleValue implements Value {
 	 */
 	@Override
 	public Object get() {
-		return arg;
+		return value;
 	}
 	
-	public void set(Object arg) {
-		this.arg = arg;
+	public void set(Object value) {
+		this.value = value;
 	}
 	
 	/* (non-Javadoc)
@@ -30,24 +35,24 @@ public class SimpleValue implements Value {
 	 */
 	@Override
 	public boolean isNull() {
-		return arg == null;
+		return value == null;
 	}
 
 	@Override
 	public void clear() {
-		arg = null;
+		value = null;
 	}
 	
 	@Override
 	public StringBuilder toStringBuilder(StringBuilder sb) {
-		return sb.append(arg);
+		return sb.append(value);
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((arg == null) ? 0 : arg.hashCode());
+		result = prime * result + ((value == null) ? 0 : value.hashCode());
 		return result;
 	}
 
@@ -60,12 +65,12 @@ public class SimpleValue implements Value {
 		if (!(obj instanceof SimpleValue))
 			return false;
 		SimpleValue other = (SimpleValue) obj;
-		return Objects.equal(other.arg, arg);
+		return Objects.equal(other.value, value);
 	}
 	
 	@Override
 	public String toString() {
-		return String.format("value{%s}", arg);
+		return String.format("value{%s}", value);
 	}
 	
 	
