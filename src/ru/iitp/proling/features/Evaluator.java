@@ -10,7 +10,7 @@ import java.util.Set;
 
 public class Evaluator {
 	List<Value> f = new ArrayList<Value>();
-	Value init = new SimpleValue();
+	Value root = new SimpleValue();
 	Set<FeatureValue> toClear = new HashSet<FeatureValue>();
 	Map<Value, Value> funSet = new HashMap<Value, Value>();
 	List<String> featureNames = new ArrayList<String>();
@@ -23,7 +23,7 @@ public class Evaluator {
 	
 	
 	public List<Object> values(Object o) {
-		init.set(o);
+		root.set(o);
 		clear();
 
 		List<Object> feats = new ArrayList<Object>();
@@ -34,7 +34,7 @@ public class Evaluator {
 	}
 	
 	public List<String> eval(Object o) {
-		init.set(o);
+		root.set(o);
 		clear();
 		
 		List<String> feats = new ArrayList<String>();
@@ -52,8 +52,6 @@ public class Evaluator {
 	public void setArg(FeatureValue f, Value arg) {
 		if(f instanceof FeatureValue)
 			toClear.add(f);
-			
-		//toClear.put(arg, f);
 	}
 	
 	public Value get(Value v) {
@@ -75,8 +73,8 @@ public class Evaluator {
 		this.featureNames.add(sb.toString());
 	}
 
-	public Value getInit() {
-		return init;
+	public Value getRoot() {
+		return root;
 	}
 	
 	

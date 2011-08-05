@@ -47,7 +47,7 @@ public class XMLFeatureParser {
 				if(reader.getLocalName().equals("name")) {
 					name = reader.getElementText();
 					if(fb.hasInjectedArg(name))
-						args.add(eval.init);
+						args.add(eval.getRoot());
 				} else if(reader.getLocalName().equals("arg")) {
 					args.add(parseArg(reader));
 				}

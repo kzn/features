@@ -48,7 +48,7 @@ public class FeatureParser {
 		String name = tree.getText();
 		List<Value> args = new ArrayList<Value>();
 		if(fb.hasInjectedArg(name))
-			args.add(eval.getInit());
+			args.add(eval.getRoot());
 		
 		for(int i = 0; i != tree.getChildCount(); i++) {
 			args.add(parseArg(tree.getChild(i), eval));
