@@ -2,6 +2,17 @@ package ru.iitp.proling.features;
 
 import com.google.common.base.Objects;
 
+/**
+ * Feature value object. 
+ * <p>
+ * This Value object returns result of feature evaluation.
+ * Assumes that all features are pure functions, so if feature arguments
+ * doesn't change, then the feature value doesn't change too. Then the 
+ * feature value can be cached
+ * 
+ * @author Anton Kazennikov
+ *
+ */
 public class FeatureValue implements Value {
 	Feature f;
 	Value v;
