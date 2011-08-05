@@ -6,6 +6,20 @@ import java.util.List;
 import java.util.Map;
 
 
+/**
+ * Feature builder that builds a feature from its name and arguments.
+ * 
+ * To use a {@link Feature} class as a function one must register it in the builder
+ * through the <code>register()</code> function.
+ * 
+ * <p>
+ * Contract: 
+ * A suitable <@link Feature} class must have a constructor that accepts 
+ * array of {@link Value} objects (a <code>Value[]</code> signature)
+ *
+ * @author Anton Kazennikov
+ *
+ */
 public class FeatureBuilder {
 	Map<String, Class<? extends Feature>> builders = new HashMap<String, Class<? extends Feature>>();
 	
