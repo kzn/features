@@ -13,9 +13,9 @@ import javax.xml.stream.events.XMLEvent;
 
 public class XMLFeatureParser {
 	Evaluator eval = new Evaluator();
-	FeatureBuilder fb;
+	FeatureRegister fb;
 	
-	public XMLFeatureParser(FeatureBuilder fb) {
+	public XMLFeatureParser(FeatureRegister fb) {
 		this.fb = fb;
 	}
 	

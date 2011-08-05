@@ -11,9 +11,9 @@ import org.antlr.runtime.tree.Tree;
 
 
 public class FeatureParser {
-	FeatureBuilder fb;
+	FeatureRegister fb;
 	
-	public FeatureParser(FeatureBuilder fb) {
+	public FeatureParser(FeatureRegister fb) {
 		this.fb = fb;
 	}
 	
