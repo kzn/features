@@ -8,7 +8,12 @@ import com.google.common.base.Objects;
 
 
 public class CommonFeatures {
-	
+	/**
+	 * Simple feature abstract class. Intended as a function that evaluates
+	 * arguments passed as args array
+	 * @author Anton Kazennikov
+	 *
+	 */
 	public abstract static class SimpleFeature implements Feature {
 		final String name;
 		final Value[] args;
@@ -60,6 +65,14 @@ public class CommonFeatures {
 	}
 
 	
+	/**
+	 * Lowercase feature.
+	 * <p>
+	 * Accepts single argument: a String.<br>
+	 * Returns String in the lower case<br>
+	 * @author Anton Kazennikov
+	 *
+	 */
 	public static class LoFeature extends SimpleFeature {
 
 		public LoFeature(Value[] args) {
@@ -81,6 +94,11 @@ public class CommonFeatures {
 		}
 	}
 	
+	/**
+	 * Tuple feature that return a list of all its arguments
+	 * @author Anton Kazennikov
+	 *
+	 */
 	public static class TupleFeature extends SimpleFeature {
 		public TupleFeature(Value[] args) {
 			super("tuple", args);
