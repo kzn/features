@@ -2,6 +2,8 @@ package ru.iitp.proling.features;
 
 import java.util.List;
 
+import ru.iitp.proling.features.Values.Simple;
+
 import com.google.common.base.Objects;
 
 /**
@@ -91,6 +93,14 @@ public class FeatureValue implements Value.Clearable {
 	
 	public List<Value> args() {
 		return args;
+	}
+	
+	public Value arg(int i) {
+		return args.get(i);
+	}
+
+	public Simple getValue() {
+		return v;
 	}
 	
 	
