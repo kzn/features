@@ -47,15 +47,15 @@ public class FeatureParser {
 	FeatureValue parseFeature(Tree tree, Evaluator eval) {
 		String name = tree.getText();
 		List<Value> args = new ArrayList<Value>();
-		if(fb.hasInjectedArg(name))
-			args.add(eval.getRoot());
+		/*if(fb.hasInjectedArg(name))
+			args.add(eval.getRoot());*/
 		
 		for(int i = 0; i != tree.getChildCount(); i++) {
 			args.add(parseArg(tree.getChild(i), eval));
 		}
 		
 		Feature f = fb.build(name, args);
-		FeatureValue fv = new FeatureValue(f, new SimpleValue());
+		FeatureValue fv = eval.rewrite(new FeatureValue(f, new Values.Simple(), args));
 		Value fv0 = eval.get(fv);
 		
 		if(fv == fv0) {
@@ -73,13 +73,13 @@ public class FeatureParser {
 	Value parseSimpleArg(Tree tree, Evaluator eval) {
 		String text = tree.getText();
 		if(text.isEmpty())
-			return new SimpleValue();
+			return new Values.Final("");
 		
 		if(text.charAt(0) == '"')
 			return parseString(text);
 		
 		int i = Integer.parseInt(text);
-		return new SimpleValue(Integer.valueOf(i));
+		return new Values.Final(Integer.valueOf(i));
 	}
 
 
@@ -96,7 +96,7 @@ public class FeatureParser {
 				
 		}
 
-		return new SimpleValue(sb.toString());
+		return new Values.Final(sb.toString());
 	}
 
 }

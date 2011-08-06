@@ -32,13 +32,13 @@ public interface Feature {
 	/**
 	 * Return feature function arguments
 	 */
-	public List<Value> args();
+	//public List<Value> args();
 	
 	/**
 	 * Evaluate feature and store result in a value object
 	 * @param res result value object
 	 */
-	public void eval(Value res);
+	public void eval(Value.Settable res, List<Value> args);
 	
 	/**
 	 * Write feature function complete name to StringBuilder

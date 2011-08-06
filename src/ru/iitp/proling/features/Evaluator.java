@@ -10,14 +10,19 @@ import java.util.Set;
 
 public class Evaluator {
 	List<Value> f = new ArrayList<Value>();
-	Value root = new SimpleValue();
+	Values.Simple root = new Values.Simple();
 	Set<FeatureValue> toClear = new HashSet<FeatureValue>();
 	Map<Value, Value> funSet = new HashMap<Value, Value>();
 	List<String> featureNames = new ArrayList<String>();
+	List<FeatureRewriter> rewriters = new ArrayList<FeatureRewriter>();
+	
+	public Evaluator() {
+		rewriters.add(new FeatureRewriter.RootInjector(this));
+	}
 	
 	
 	public void clear() {
-		for(Value v : toClear)
+		for(FeatureValue v : toClear)
 			v.clear();
 	}
 	
@@ -66,6 +71,14 @@ public class Evaluator {
 		return v;
 	}
 	
+	public FeatureValue rewrite(FeatureValue f) {
+		for(FeatureRewriter fr : rewriters) {
+			f = fr.rewrite(f);
+		}
+		
+		return f;
+	}
+	
 	public void addFeature(FeatureValue f) {
 		this.f.add(get(f));
 		StringBuilder sb = new StringBuilder();
@@ -73,7 +86,7 @@ public class Evaluator {
 		this.featureNames.add(sb.toString());
 	}
 
-	public Value getRoot() {
+	public Values.Simple getRoot() {
 		return root;
 	}
 	

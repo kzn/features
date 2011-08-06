@@ -15,11 +15,9 @@ public class CommonFeatures {
 	 */
 	public abstract static class Simple implements Feature {
 		final String name;
-		final List<Value> args;
 		
-		public Simple(String name, List<Value> args) {
+		public Simple(String name) {
 			this.name = name;
-			this.args = args;
 		}
 
 		@Override
@@ -28,15 +26,9 @@ public class CommonFeatures {
 		}
 		
 		@Override
-		public List<Value> args() {
-			return args;
-		}
-
-		@Override
 		public int hashCode() {
 			final int prime = 31;
 			int result = 1;
-			result = prime * result + args.hashCode();
 			result = prime * result + ((name == null) ? 0 : name.hashCode());
 			return result;
 		}
@@ -51,16 +43,9 @@ public class CommonFeatures {
 				return false;
 			Simple other = (Simple) obj;
 			
-			return Objects.equal(name, other.name) 
-					&& Objects.equal(args, other.args);//Objects.equal(args, other.args);
+			return Objects.equal(name, other.name);
 					
 		}
-		
-		public Object getObject() {
-			return args.get(0).get();
-		}
-
-		
 		
 	}
 
@@ -75,20 +60,20 @@ public class CommonFeatures {
 	 */
 	public static class LowerCase extends Simple {
 
-		public LowerCase(List<Value> args) {
-			super("lo", args);
+		public LowerCase() {
+			super("lo");
 		}
 
 		@Override
-		public void eval(Value res) {
+		public void eval(Value.Settable res, List<Value> args) {
 			res.set(((String)args.get(0).get()).toLowerCase());
 		}
 		
 		@Override
 		public StringBuilder toStringBuilder(StringBuilder sb) {
-			sb.append(name()).append('(');
-			args.get(0).toStringBuilder(sb);
-			sb.append(')');
+			sb.append(name());//.append('(');
+			//args.get(0).toStringBuilder(sb);
+			//sb.append(')');
 			
 			return sb;
 		}
@@ -100,12 +85,12 @@ public class CommonFeatures {
 	 *
 	 */
 	public static class Tuple extends Simple {
-		public Tuple(List<Value> args) {
-			super("tuple", args);
+		public Tuple() {
+			super("tuple");
 		}
 
 		@Override
-		public void eval(Value res) {
+		public void eval(Value.Settable res, List<Value> args) {
 			List<Object> o = new ArrayList<Object>();
 			
 			for(Value v : args) {
@@ -119,12 +104,12 @@ public class CommonFeatures {
 		@Override
 		public StringBuilder toStringBuilder(StringBuilder sb) {
 			sb.append('<');
-			int i = 0; 
+			/*int i = 0; 
 			for(Value arg : args) {
 				if(i++ != 0)
 					sb.append(',');
 				arg.toStringBuilder(sb);
-			}
+			}*/
 			sb.append('>');
 			
 			return sb;

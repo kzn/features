@@ -7,7 +7,7 @@ import com.google.common.base.Objects;
  * @author Anton Kazennikov
  *
  */
-public class SimpleValue implements Value {
+public class SimpleValue implements Value.Mutable {
 	Object value;
 	
 	public SimpleValue() {
@@ -26,6 +26,7 @@ public class SimpleValue implements Value {
 		return value;
 	}
 	
+	@Override
 	public void set(Object value) {
 		this.value = value;
 	}
@@ -72,6 +73,7 @@ public class SimpleValue implements Value {
 	public String toString() {
 		return String.format("value{%s}", value);
 	}
+	
 	
 	
 }

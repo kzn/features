@@ -26,8 +26,9 @@ public interface FeatureDefinition {
 				return null;
 			
 			try {
-				Constructor<? extends Feature> ctor = cls.getConstructor(List.class);
-				return ctor.newInstance(args);
+				//Constructor<? extends Feature> ctor = cls.getConstructor(List.class);
+				//return ctor.newInstance(args);
+				return cls.newInstance();
 			} catch(Exception e) {
 				return null;
 			}

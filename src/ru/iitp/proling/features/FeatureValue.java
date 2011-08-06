@@ -1,5 +1,7 @@
 package ru.iitp.proling.features;
 
+import java.util.List;
+
 import com.google.common.base.Objects;
 
 /**
@@ -13,14 +15,16 @@ import com.google.common.base.Objects;
  * @author Anton Kazennikov
  *
  */
-public class FeatureValue implements Value {
+public class FeatureValue implements Value.Clearable {
 	Feature f;
-	Value v;
+	List<Value> args;
+	Values.Simple v;
 	
 	
-	public FeatureValue(Feature f, Value v) {
+	public FeatureValue(Feature f, Values.Simple v, List<Value> args) {
 		this.f = f;
 		this.v = v;
+		this.args = args;
 	}
 	
 	public FeatureValue() {
@@ -31,7 +35,7 @@ public class FeatureValue implements Value {
 	@Override
 	public Object get() {
 		if(v.isNull())
-			f.eval(v);
+			f.eval(v, args);
 		return v.get();
 	}
 
@@ -40,16 +44,17 @@ public class FeatureValue implements Value {
 		return v.isNull();
 	}
 
-	@Override
+	/*@Override
 	public void set(Object o) {
 		v.set(o);
-	}
+	}*/
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((f == null) ? 0 : f.hashCode());
+		result = prime * result + ((f == null) ? 0 : args.hashCode());
 		return result;
 	}
 
@@ -63,7 +68,7 @@ public class FeatureValue implements Value {
 			return false;
 		FeatureValue other = (FeatureValue) obj;
 		
-		return Objects.equal(other.f, f);
+		return Objects.equal(other.f, f) && Objects.equal(other.args, args);
 	}
 
 	@Override
@@ -77,11 +82,15 @@ public class FeatureValue implements Value {
 	}
 	
 	public String toString() {
-		return String.format("fv:{%s%s}", f.name(), f.args());
+		return String.format("fv:{%s%s}", f.name(), args);
 	}
 	
 	public Feature getFeature() {
 		return f;
+	}
+	
+	public List<Value> args() {
+		return args;
 	}
 	
 	
