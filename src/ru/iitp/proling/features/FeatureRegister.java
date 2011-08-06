@@ -12,6 +12,9 @@ import java.util.Map;
  * through the <code>register()</code> function.
  * 
  * <p>
+ * By default, comes with registered {@link CommonFeatures.Tuple} class
+ * 
+ * <p>
  * Contract: 
  * A suitable <@link Feature} class must have a constructor that accepts 
  * array of {@link Value} objects (a <code>Value[]</code> signature)
@@ -21,6 +24,10 @@ import java.util.Map;
  */
 public class FeatureRegister {
 	Map<String, FeatureDefinition> builders = new HashMap<String, FeatureDefinition>();
+	
+	public FeatureRegister() {
+		register("tuple", CommonFeatures.Tuple.class);
+	}
 	
 	public Feature build(String name, List<Value> values) {
 		FeatureDefinition b = builders.get(name);
