@@ -18,6 +18,7 @@ public class Evaluator {
 	
 	public Evaluator() {
 		rewriters.add(new FeatureRewriter.RootInjector(this));
+		rewriters.add(new FeatureRewriter.IndexedTuple(this));
 	}
 	
 	
