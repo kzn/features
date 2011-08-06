@@ -117,14 +117,34 @@ public class CommonFeatures {
 	}
 	
 
+	
+	/**
+	 * Base class for root injected features like w(1) [w(root, 1)]
+	 * @author Anton Kazennikov
+	 *
+	 * @param <E>
+	 */
+	public abstract static class Base<E> extends Simple implements Feature.Injectable {
+
+		public Base(String name) {
+			super(name);
+		}
+		
+		@SuppressWarnings("unchecked")
+		public E getObject(List<Value> args) {
+			return (E)args.get(0).get();
+		}
+
+		
+	}
 	/**
 	 * Base class for features like f(i), where i is a numeric index
 	 * @author Anton Kazennikov
 	 *
 	 */
-	public abstract static class IndexedFeature extends Simple implements Feature.Injectable {
+	public abstract static class Indexed<E> extends Base<E> implements Feature.Injectable {
 
-		public IndexedFeature(String name) {
+		public Indexed(String name) {
 			super(name);
 		}
 		
@@ -132,10 +152,6 @@ public class CommonFeatures {
 			return (Integer)args.get(1).get();
 		}
 		
-		public Object getObject(List<Value> args) {
-			return args.get(0).get();
-		}
-
 		
 		@Override
 		public StringBuilder toStringBuilder(StringBuilder sb) {
