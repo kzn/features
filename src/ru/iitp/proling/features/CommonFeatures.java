@@ -115,4 +115,38 @@ public class CommonFeatures {
 			return sb;
 		}
 	}
+	
+
+	/**
+	 * Base class for features like f(i), where i is a numeric index
+	 * @author Anton Kazennikov
+	 *
+	 */
+	public abstract static class IndexedFeature extends Simple implements Feature.Injectable {
+
+		public IndexedFeature(String name) {
+			super(name);
+		}
+		
+		public int getIndex(List<Value> args) {
+			return (Integer)args.get(1).get();
+		}
+		
+		public Object getObject(List<Value> args) {
+			return args.get(0).get();
+		}
+
+		
+		@Override
+		public StringBuilder toStringBuilder(StringBuilder sb) {
+			sb.append(name).append('(');
+			//args.get(1).toStringBuilder(sb);
+			sb.append(')');
+			
+			return sb;
+		}
+
+	}
+	
+
 }
