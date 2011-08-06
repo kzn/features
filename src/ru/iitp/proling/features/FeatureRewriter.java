@@ -42,7 +42,7 @@ public interface FeatureRewriter {
 
 		@Override
 		public FeatureValue rewrite(FeatureValue f) {
-			if(CommonFeatures.IndexedFeature.class.isAssignableFrom(f.getFeature().getClass())) {
+			if(CommonFeatures.Indexed.class.isAssignableFrom(f.getFeature().getClass())) {
 				if(f.args().size() == 2)
 					return f;
 				
