@@ -21,7 +21,11 @@ arg: (feat | STRING);
 
 feat: SIMPLE^ ('('! arg (','! arg)* ')'!)?; 
 
-feature: feat^ | '<'^ arg (','! arg)+ '>'!; 
+angle_pair: '<' arg (',' arg)+ '>' -> ^(SIMPLE["tuple"] arg+); 
+feature: feats |  angle_pair;
+feats: feat ( 
+	       (',' feat)+ -> ^(SIMPLE["tuple"] feat+)
+	       | -> ^(feat));
 
 WS: (' ' | '\t' | '\n' | '\r')+ { $channel = HIDDEN;};
 SINGLE_COMMENT: '//' ~('\r' | '\n')* {$channel = HIDDEN;};
