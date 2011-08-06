@@ -1,19 +1,19 @@
 package ru.iitp.proling.features;
 
-import java.lang.reflect.Constructor;
 import java.util.List;
+
+import com.spinn3r.log5j.Logger;
 
 /**
  * Feature builder interface.
  * @author Anton Kazennikov
  *
  */
-public interface FeatureDefinition {
+public interface FeatureBuilder {
+	
 	public Feature build(List<Value> args);
-	public boolean hasInjectedArg();
-	
-	
-	public static class Class implements FeatureDefinition {
+	public static class Class implements FeatureBuilder {
+		private final static Logger logger = Logger.getLogger();
 		java.lang.Class<? extends Feature> cls;
 		
 		public Class(java.lang.Class<? extends Feature> cls) {
@@ -26,18 +26,13 @@ public interface FeatureDefinition {
 				return null;
 			
 			try {
-				//Constructor<? extends Feature> ctor = cls.getConstructor(List.class);
-				//return ctor.newInstance(args);
 				return cls.newInstance();
 			} catch(Exception e) {
+				logger.error(e);
 				return null;
 			}
 		}
 
-		@Override
-		public boolean hasInjectedArg() {
-			return Feature.Injectable.class.isAssignableFrom(cls);
-		}
 	}
 
 }

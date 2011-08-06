@@ -23,21 +23,21 @@ import java.util.Map;
  *
  */
 public class FeatureRegister {
-	Map<String, FeatureDefinition> builders = new HashMap<String, FeatureDefinition>();
+	Map<String, FeatureBuilder> builders = new HashMap<String, FeatureBuilder>();
 	
 	public FeatureRegister() {
 		register("tuple", CommonFeatures.Tuple.class);
 	}
 	
 	public Feature build(String name, List<Value> values) {
-		FeatureDefinition b = builders.get(name);
+		FeatureBuilder b = builders.get(name);
 		if(b != null)
 			return b.build(values);
 		
 		return null;
 	}
 	
-	public void register(String name, FeatureDefinition fb) {
+	public void register(String name, FeatureBuilder fb) {
 		builders.put(name, fb);
 	}
 	
@@ -45,13 +45,8 @@ public class FeatureRegister {
 		register(name, builderFor(cls));
 	}
 	
-	public boolean hasInjectedArg(String name) {
-		FeatureDefinition b = builders.get(name);
-		return b.hasInjectedArg();
-	}
-	
-	public static FeatureDefinition builderFor(final Class<? extends Feature> cls) {
-		return new FeatureDefinition.Class(cls);
+	public static FeatureBuilder builderFor(final Class<? extends Feature> cls) {
+		return new FeatureBuilder.Class(cls);
 	}
 	
 	
