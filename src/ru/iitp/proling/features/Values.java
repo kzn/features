@@ -26,10 +26,10 @@ public class Values {
 			return value == null;
 		}
 		
-		@Override
-		public StringBuilder toStringBuilder(StringBuilder sb) {
-			return sb.append(value);
-		}
+//		@Override
+//		public StringBuilder toStringBuilder(StringBuilder sb) {
+//			return sb.append(value);
+//		}
 
 		@Override
 		public int hashCode() {
@@ -96,10 +96,10 @@ public class Values {
 			value = null;
 		}
 
-		@Override
-		public StringBuilder toStringBuilder(StringBuilder sb) {
-			return sb.append(value);
-		}
+//		@Override
+//		public StringBuilder toStringBuilder(StringBuilder sb) {
+//			return sb.append(value);
+//		}
 
 		@Override
 		public int hashCode() {

@@ -12,7 +12,7 @@ import javax.xml.stream.events.XMLEvent;
 
 
 public class XMLFeatureParser {
-	Evaluator eval = new Evaluator();
+	FeatureExtractor eval = new FeatureExtractor();
 	FeatureRegister fb;
 	
 	public XMLFeatureParser(FeatureRegister fb) {
@@ -96,7 +96,7 @@ public class XMLFeatureParser {
 		return v;
 	}
 	
-	public Evaluator getEval() {
+	public FeatureExtractor getEval() {
 		return eval;
 	}	
 }

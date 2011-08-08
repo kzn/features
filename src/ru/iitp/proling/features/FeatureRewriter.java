@@ -8,9 +8,9 @@ public interface FeatureRewriter {
 	public FeatureValue rewrite(FeatureValue f);
 	
 	public static class RootInjector implements FeatureRewriter {
-		Evaluator eval;
+		FeatureExtractor eval;
 		
-		public RootInjector(Evaluator eval) {
+		public RootInjector(FeatureExtractor eval) {
 			this.eval = eval;
 		}
 
@@ -34,9 +34,9 @@ public interface FeatureRewriter {
 	 *
 	 */
 	public static class IndexedTuple implements FeatureRewriter {
-		Evaluator eval;
+		FeatureExtractor eval;
 
-		public IndexedTuple(Evaluator eval) {
+		public IndexedTuple(FeatureExtractor eval) {
 			this.eval = eval;
 		}
 

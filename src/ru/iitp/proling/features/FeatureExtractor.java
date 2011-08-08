@@ -8,15 +8,14 @@ import java.util.Map;
 import java.util.Set;
 
 
-public class Evaluator {
+public class FeatureExtractor {
 	List<Value> f = new ArrayList<Value>();
 	Values.Simple root = new Values.Simple();
 	Set<FeatureValue> toClear = new HashSet<FeatureValue>();
 	Map<Value, Value> funSet = new HashMap<Value, Value>();
-	List<String> featureNames = new ArrayList<String>();
 	List<FeatureRewriter> rewriters = new ArrayList<FeatureRewriter>();
 	
-	public Evaluator() {
+	public FeatureExtractor() {
 		rewriters.add(new FeatureRewriter.RootInjector(this));
 		rewriters.add(new FeatureRewriter.IndexedTuple(this));
 	}
@@ -82,9 +81,6 @@ public class Evaluator {
 	
 	public void addFeature(FeatureValue f) {
 		this.f.add(get(f));
-		StringBuilder sb = new StringBuilder();
-		f.getFeature().toStringBuilder(sb);
-		this.featureNames.add(sb.toString());
 	}
 
 	public Values.Simple getRoot() {

@@ -22,7 +22,7 @@ public interface Value {
 	 * @param sb string builder
 	 * @return sb
 	 */
-	public StringBuilder toStringBuilder(StringBuilder sb);
+	//public StringBuilder toStringBuilder(StringBuilder sb);
 	
 	public interface Settable extends Value {
 		/**

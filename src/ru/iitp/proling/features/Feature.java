@@ -45,5 +45,5 @@ public interface Feature {
 	 * @param sb target string builder
 	 * @return sb object
 	 */
-	public StringBuilder toStringBuilder(StringBuilder sb);
+	//public StringBuilder toStringBuilder(StringBuilder sb);
 }

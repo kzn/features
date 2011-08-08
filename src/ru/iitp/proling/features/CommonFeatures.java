@@ -69,14 +69,14 @@ public class CommonFeatures {
 			res.set(((String)args.get(0).get()).toLowerCase());
 		}
 		
-		@Override
-		public StringBuilder toStringBuilder(StringBuilder sb) {
-			sb.append(name());//.append('(');
-			//args.get(0).toStringBuilder(sb);
-			//sb.append(')');
-			
-			return sb;
-		}
+//		@Override
+//		public StringBuilder toStringBuilder(StringBuilder sb) {
+//			sb.append(name());//.append('(');
+//			//args.get(0).toStringBuilder(sb);
+//			//sb.append(')');
+//			
+//			return sb;
+//		}
 	}
 	
 	/**
@@ -101,19 +101,19 @@ public class CommonFeatures {
 				
 		}
 
-		@Override
-		public StringBuilder toStringBuilder(StringBuilder sb) {
-			sb.append('<');
-			/*int i = 0; 
-			for(Value arg : args) {
-				if(i++ != 0)
-					sb.append(',');
-				arg.toStringBuilder(sb);
-			}*/
-			sb.append('>');
-			
-			return sb;
-		}
+//		@Override
+//		public StringBuilder toStringBuilder(StringBuilder sb) {
+//			sb.append('<');
+//			/*int i = 0; 
+//			for(Value arg : args) {
+//				if(i++ != 0)
+//					sb.append(',');
+//				arg.toStringBuilder(sb);
+//			}*/
+//			sb.append('>');
+//			
+//			return sb;
+//		}
 	}
 	
 
@@ -153,15 +153,14 @@ public class CommonFeatures {
 		}
 		
 		
-		@Override
-		public StringBuilder toStringBuilder(StringBuilder sb) {
-			sb.append(name).append('(');
-			//args.get(1).toStringBuilder(sb);
-			sb.append(')');
-			
-			return sb;
-		}
-
+//		@Override
+//		public StringBuilder toStringBuilder(StringBuilder sb) {
+//			sb.append(name).append('(');
+//			//args.get(1).toStringBuilder(sb);
+//			sb.append(')');
+//			
+//			return sb;
+//		}
 	}
 	
 

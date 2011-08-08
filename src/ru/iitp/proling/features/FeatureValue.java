@@ -78,10 +78,10 @@ public class FeatureValue implements Value.Clearable {
 		v.clear();
 	}
 
-	@Override
-	public StringBuilder toStringBuilder(StringBuilder sb) {
-		return f.toStringBuilder(sb);
-	}
+//	@Override
+//	public StringBuilder toStringBuilder(StringBuilder sb) {
+//		return f.toStringBuilder(sb);
+//	}
 	
 	public String toString() {
 		return String.format("fv:{%s%s}", f.name(), args);

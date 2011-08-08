@@ -19,12 +19,12 @@ public class FeatureParser {
 	
 	
 	
-	public Evaluator parse(String def) throws RecognitionException {
+	public FeatureExtractor parse(String def) throws RecognitionException {
 		CharStream stream = new ANTLRStringStream(def);
 		return parse(stream);
 	}
 	
-	Evaluator parse(CharStream stream) throws RecognitionException {
+	FeatureExtractor parse(CharStream stream) throws RecognitionException {
 		FeaturesLanguageLexer lexer = new FeaturesLanguageLexer(stream);
 		CommonTokenStream tokenStream = new CommonTokenStream(lexer);
 		FeaturesLanguageParser parser = new FeaturesLanguageParser(tokenStream);
@@ -32,8 +32,8 @@ public class FeatureParser {
 		return parse(tree);
 	}
 	
-	Evaluator parse(Tree tree) {
-		Evaluator eval = new Evaluator();
+	FeatureExtractor parse(Tree tree) {
+		FeatureExtractor eval = new FeatureExtractor();
 		if(tree.getText() != null) {
 			eval.addFeature(parseFeature(tree, eval));
 		} else {
@@ -44,7 +44,7 @@ public class FeatureParser {
 		return eval;
 	}
 	
-	FeatureValue parseFeature(Tree tree, Evaluator eval) {
+	FeatureValue parseFeature(Tree tree, FeatureExtractor eval) {
 		String name = tree.getText();
 		List<Value> args = new ArrayList<Value>();
 		/*if(fb.hasInjectedArg(name))
@@ -66,11 +66,11 @@ public class FeatureParser {
 		return (FeatureValue) fv0;
 	}
 	
-	Value parseArg(Tree tree, Evaluator eval) {
+	Value parseArg(Tree tree, FeatureExtractor eval) {
 		return tree.getChildCount() == 0? parseSimpleArg(tree, eval) : parseFeature(tree, eval);
 	}
 		
-	Value parseSimpleArg(Tree tree, Evaluator eval) {
+	Value parseSimpleArg(Tree tree, FeatureExtractor eval) {
 		String text = tree.getText();
 		if(text.isEmpty())
 			return new Values.Final("");
