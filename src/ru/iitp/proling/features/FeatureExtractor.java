@@ -7,13 +7,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-
+/**
+ * Feature extractor object extracts and returns list of extracted features values
+ * @author ant
+ *
+ */
 public class FeatureExtractor {
 	List<Value> f = new ArrayList<Value>();
+	
 	Values.Simple root = new Values.Simple();
 	Set<FeatureValue> toClear = new HashSet<FeatureValue>();
-	Map<Value, Value> funSet = new HashMap<Value, Value>();
+	Map<FeatureValue, FeatureValue> funSet = new HashMap<FeatureValue, FeatureValue>();
 	List<FeatureRewriter> rewriters = new ArrayList<FeatureRewriter>();
+	
 	
 	public FeatureExtractor() {
 		rewriters.add(new FeatureRewriter.RootInjector(this));
@@ -21,12 +27,20 @@ public class FeatureExtractor {
 	}
 	
 	
+	/**
+	 * Clear cached values for reevaluation of the features
+	 */
 	public void clear() {
 		for(FeatureValue v : toClear)
 			v.clear();
 	}
 	
 	
+	/**
+	 * Get raw list of extracted features from source object
+	 * @param o feature extraction source
+	 * @return list of features
+	 */
 	public List<Object> values(Object o) {
 		root.set(o);
 		clear();
@@ -38,6 +52,11 @@ public class FeatureExtractor {
 		return feats;
 	}
 	
+	/**
+	 * Get formatted list of extracted features from source object
+	 * @param o feature extraction source
+	 * @return list of string features
+	 */
 	public List<String> eval(Object o) {
 		root.set(o);
 		clear();
@@ -53,24 +72,28 @@ public class FeatureExtractor {
 		
 		return feats;
 	}
-	
-	public void setArg(FeatureValue f, Value arg) {
-		if(f instanceof FeatureValue)
-			toClear.add(f);
-	}
-	
-	public Value get(Value v) {
+		
+	/**
+	 * Get feature value function from list of already seen
+	 * @param v
+	 * @return
+	 */
+	public FeatureValue get(FeatureValue v) {
 		if(v instanceof FeatureValue) {
 			if(funSet.containsKey(v))
 				return funSet.get(v);
-			
+			toClear.add((FeatureValue)v);
 			funSet.put(v, v);
-			
 		} 
 		
 		return v;
 	}
 	
+	/**
+	 * Rewrite feature values using defined feature rewriters
+	 * @param f
+	 * @return
+	 */
 	public FeatureValue rewrite(FeatureValue f) {
 		for(FeatureRewriter fr : rewriters) {
 			f = fr.rewrite(f);
@@ -79,17 +102,19 @@ public class FeatureExtractor {
 		return f;
 	}
 	
+	/**
+	 * Add feature to the list for extraction
+	 * @param f
+	 */
 	public void addFeature(FeatureValue f) {
 		this.f.add(get(f));
 	}
 
+	/**
+	 * Get root value object
+	 * @return
+	 */
 	public Values.Simple getRoot() {
 		return root;
 	}
-	
-	
-	
-	
-	
-	
 }

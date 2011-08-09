@@ -10,6 +10,11 @@ import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.tree.Tree;
 
 
+/**
+ * Feature parser from simple definition syntax
+ * @author ant
+ *
+ */
 public class FeatureParser {
 	FeatureRegister fb;
 	
@@ -18,12 +23,23 @@ public class FeatureParser {
 	}
 	
 	
-	
+	/**
+	 * Parses string definition
+	 * @param def actual definition
+	 * @return FeatureExtractor
+	 * @throws RecognitionException
+	 */
 	public FeatureExtractor parse(String def) throws RecognitionException {
 		CharStream stream = new ANTLRStringStream(def);
 		return parse(stream);
 	}
 	
+	/**
+	 * Helper function - parses antlr char stream
+	 * @param stream stream to parse
+	 * @return FeatureExtractor
+	 * @throws RecognitionException
+	 */
 	FeatureExtractor parse(CharStream stream) throws RecognitionException {
 		FeaturesLanguageLexer lexer = new FeaturesLanguageLexer(stream);
 		CommonTokenStream tokenStream = new CommonTokenStream(lexer);
@@ -32,6 +48,11 @@ public class FeatureParser {
 		return parse(tree);
 	}
 	
+	/**
+	 * Builds feature extractor from antlr parse tree
+	 * @param tree antlr parse tree
+	 * @return FeatureExtractor
+	 */
 	FeatureExtractor parse(Tree tree) {
 		FeatureExtractor eval = new FeatureExtractor();
 		if(tree.getText() != null) {
@@ -43,12 +64,16 @@ public class FeatureParser {
 		
 		return eval;
 	}
-	
+
+	/**
+	 * Parses an antlr tree feature node to FeatureValue
+	 * @param tree feature node
+	 * @param eval
+	 * @return
+	 */
 	FeatureValue parseFeature(Tree tree, FeatureExtractor eval) {
 		String name = tree.getText();
 		List<Value> args = new ArrayList<Value>();
-		/*if(fb.hasInjectedArg(name))
-			args.add(eval.getRoot());*/
 		
 		for(int i = 0; i != tree.getChildCount(); i++) {
 			args.add(parseArg(tree.getChild(i), eval));
@@ -56,20 +81,21 @@ public class FeatureParser {
 		
 		Feature f = fb.build(name, args);
 		FeatureValue fv = eval.rewrite(new FeatureValue(f, new Values.Simple(), args));
-		Value fv0 = eval.get(fv);
-		
-		if(fv == fv0) {
-			for(Value arg : args)
-				eval.setArg(fv, arg);
-		}
-		
+		FeatureValue fv0 = eval.get(fv);
+				
 		return (FeatureValue) fv0;
 	}
 	
+	/**
+	 * Parses a feature argument value
+	 */
 	Value parseArg(Tree tree, FeatureExtractor eval) {
 		return tree.getChildCount() == 0? parseSimpleArg(tree, eval) : parseFeature(tree, eval);
 	}
 		
+	/**
+	 * Parses a simple(terminal) feature argument
+	 */
 	Value parseSimpleArg(Tree tree, FeatureExtractor eval) {
 		String text = tree.getText();
 		if(fb.contains(text))
@@ -87,6 +113,9 @@ public class FeatureParser {
 
 
 
+	/**
+	 * Parses string object to Value
+	 */
 	Value parseString(String text) {
 		StringBuilder sb = new StringBuilder();
 		

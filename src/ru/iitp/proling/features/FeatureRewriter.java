@@ -20,7 +20,7 @@ public interface FeatureRewriter {
 				List<Value> args = new ArrayList<Value>();
 				args.add(eval.getRoot());
 				args.addAll(f.args());
-				return new FeatureValue(f.getFeature(), new Values.Simple(), args);
+				return eval.get(new FeatureValue(f.getFeature(), new Values.Simple(), args));
 			}
 			
 			return f;
