@@ -48,6 +48,10 @@ public class FeatureRegister {
 	public static FeatureBuilder builderFor(final Class<? extends Feature> cls) {
 		return new FeatureBuilder.Class(cls);
 	}
+
+	public boolean contains(String name) {
+		return builders.containsKey(name);
+	}
 	
 	
 

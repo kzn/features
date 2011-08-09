@@ -72,6 +72,9 @@ public class FeatureParser {
 		
 	Value parseSimpleArg(Tree tree, FeatureExtractor eval) {
 		String text = tree.getText();
+		if(fb.contains(text))
+			return parseFeature(tree, eval);
+		
 		if(text.isEmpty())
 			return new Values.Final("");
 		
