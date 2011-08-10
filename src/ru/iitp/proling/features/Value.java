@@ -16,13 +16,6 @@ public interface Value {
 	 * @return
 	 */
 	public boolean isNull();
-		
-	/**
-	 * Write string representation of this value to StringBuilder
-	 * @param sb string builder
-	 * @return sb
-	 */
-	//public StringBuilder toStringBuilder(StringBuilder sb);
 	
 	public interface Settable extends Value {
 		/**

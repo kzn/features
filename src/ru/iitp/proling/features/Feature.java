@@ -4,6 +4,7 @@ import java.util.List;
 
 import ru.iitp.proling.features.Values.Var;
 
+import com.google.common.base.Joiner;
 import com.google.common.base.Objects;
 
 /**
@@ -46,17 +47,12 @@ public class Feature implements Value.Clearable {
 		return v.isNull();
 	}
 
-	/*@Override
-	public void set(Object o) {
-		v.set(o);
-	}*/
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((f == null) ? 0 : f.hashCode());
-		result = prime * result + ((f == null) ? 0 : args.hashCode());
+		result = prime * result + ((args == null) ? 0 : args.hashCode());
 		return result;
 	}
 
@@ -77,14 +73,20 @@ public class Feature implements Value.Clearable {
 	public void clear() {
 		v.clear();
 	}
-
-//	@Override
-//	public StringBuilder toStringBuilder(StringBuilder sb) {
-//		return f.toStringBuilder(sb);
-//	}
 	
 	public String toString() {
-		return String.format("fv:{%s%s}", f.name(), args);
+		StringBuilder sb = new StringBuilder();
+		sb.append(f.name());
+		sb.append('(');
+		if(f instanceof FeatureFunction.Injectable) {
+			Joiner.on(", ").appendTo(sb, args.subList(1, args.size()));
+		} else {
+			Joiner.on(", ").appendTo(sb, args);
+		}
+
+		sb.append(')');
+		
+		return sb.toString();
 	}
 	
 	public FeatureFunction getFeature() {

@@ -43,6 +43,25 @@ public class FeatureRegister {
 		}
 	}
 	
+	/**
+	 * Function aliasing provider
+	 * @author Anton Kazennikov
+	 *
+	 */
+	public class AliasProvider implements FeatureFunction.Provider {
+		String alias;
+		
+		public AliasProvider(String alias) {
+			this.alias = alias;
+		}
+
+		@Override
+		public FeatureFunction get() {
+			return providers.get(alias).get();
+		}
+		
+	}
+	
 	public FeatureRegister() {
 		register("tuple", new CommonFeatures.Tuple());
 	}
@@ -66,6 +85,15 @@ public class FeatureRegister {
 	 */
 	public void register(FeatureFunction fun) {
 		register(fun.name(), fun);
+	}
+	
+	/**
+	 * Register a function alias
+	 * @param alias function alias name
+	 * @param name real function name
+	 */
+	public void register(String alias, String name) {
+		register(alias, new AliasProvider(name));
 	}
 	
 	/**

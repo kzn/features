@@ -25,11 +25,6 @@ public class Values {
 		public boolean isNull() {
 			return value == null;
 		}
-		
-//		@Override
-//		public StringBuilder toStringBuilder(StringBuilder sb) {
-//			return sb.append(value);
-//		}
 
 		@Override
 		public int hashCode() {
@@ -53,7 +48,7 @@ public class Values {
 		
 		@Override
 		public String toString() {
-			return String.format("value{%s}", value);
+			return value.toString();
 		}
 
 	}
@@ -63,7 +58,6 @@ public class Values {
 		Object value;
 
 		public Var() {
-
 		}
 
 		public Var(Object value) {
@@ -96,11 +90,6 @@ public class Values {
 			value = null;
 		}
 
-//		@Override
-//		public StringBuilder toStringBuilder(StringBuilder sb) {
-//			return sb.append(value);
-//		}
-
 		@Override
 		public int hashCode() {
 			final int prime = 31;
@@ -123,11 +112,8 @@ public class Values {
 
 		@Override
 		public String toString() {
-			return String.format("value{%s}", value);
+			return value.toString();
 		}
-
-
-
 	}
 
 }
