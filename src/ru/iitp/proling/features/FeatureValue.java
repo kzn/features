@@ -18,12 +18,12 @@ import com.google.common.base.Objects;
  *
  */
 public class FeatureValue implements Value.Clearable {
-	Feature f;
+	FeatureFunction f;
 	List<Value> args;
 	Values.Simple v;
 	
 	
-	public FeatureValue(Feature f, Values.Simple v, List<Value> args) {
+	public FeatureValue(FeatureFunction f, Values.Simple v, List<Value> args) {
 		this.f = f;
 		this.v = v;
 		this.args = args;
@@ -87,7 +87,7 @@ public class FeatureValue implements Value.Clearable {
 		return String.format("fv:{%s%s}", f.name(), args);
 	}
 	
-	public Feature getFeature() {
+	public FeatureFunction getFeature() {
 		return f;
 	}
 	

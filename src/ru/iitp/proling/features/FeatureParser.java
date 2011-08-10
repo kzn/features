@@ -79,7 +79,7 @@ public class FeatureParser {
 			args.add(parseArg(tree.getChild(i), eval));
 		}
 		
-		Feature f = fb.build(name, args);
+		FeatureFunction f = fb.build(name, args);
 		FeatureValue fv = eval.rewrite(new FeatureValue(f, new Values.Simple(), args));
 		FeatureValue fv0 = eval.get(fv);
 				

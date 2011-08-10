@@ -13,7 +13,7 @@ public class CommonFeatures {
 	 * @author Anton Kazennikov
 	 *
 	 */
-	public abstract static class Simple implements Feature {
+	public abstract static class Simple implements FeatureFunction {
 		final String name;
 		
 		public Simple(String name) {
@@ -124,7 +124,7 @@ public class CommonFeatures {
 	 *
 	 * @param <E>
 	 */
-	public abstract static class Base<E> extends Simple implements Feature.Injectable {
+	public abstract static class Base<E> extends Simple implements FeatureFunction.Injectable {
 
 		public Base(String name) {
 			super(name);
@@ -142,7 +142,7 @@ public class CommonFeatures {
 	 * @author Anton Kazennikov
 	 *
 	 */
-	public abstract static class Indexed<E> extends Base<E> implements Feature.Injectable {
+	public abstract static class Indexed<E> extends Base<E> implements FeatureFunction.Injectable {
 
 		public Indexed(String name) {
 			super(name);

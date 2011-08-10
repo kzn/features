@@ -60,7 +60,7 @@ public class XMLFeatureParser {
 		if(name.isEmpty())
 			return null;
 		
-		Feature f = fb.build(name, args);
+		FeatureFunction f = fb.build(name, args);
 		FeatureValue fv = new FeatureValue(f, new SimpleValue());
 		Value fv0 = eval.get(fv);
 		

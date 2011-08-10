@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * Feature register that builds a feature from its name and arguments.
  * 
- * To use a {@link Feature} class as a function one must register it in the builder
+ * To use a {@link FeatureFunction} class as a function one must register it in the builder
  * through the <code>register()</code> function.
  * 
  * <p>
@@ -29,7 +29,7 @@ public class FeatureRegister {
 		register("tuple", CommonFeatures.Tuple.class);
 	}
 	
-	public Feature build(String name, List<Value> values) {
+	public FeatureFunction build(String name, List<Value> values) {
 		FeatureBuilder b = builders.get(name);
 		if(b != null)
 			return b.build(values);
@@ -41,11 +41,11 @@ public class FeatureRegister {
 		builders.put(name, fb);
 	}
 	
-	public void register(String name, Class<? extends Feature> cls) {
+	public void register(String name, Class<? extends FeatureFunction> cls) {
 		register(name, builderFor(cls));
 	}
 	
-	public static FeatureBuilder builderFor(final Class<? extends Feature> cls) {
+	public static FeatureBuilder builderFor(final Class<? extends FeatureFunction> cls) {
 		return new FeatureBuilder.Class(cls);
 	}
 

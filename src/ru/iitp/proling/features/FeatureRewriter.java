@@ -16,7 +16,7 @@ public interface FeatureRewriter {
 
 		@Override
 		public FeatureValue rewrite(FeatureValue f) {
-			if(Feature.Injectable.class.isAssignableFrom(f.getFeature().getClass())) {
+			if(FeatureFunction.Injectable.class.isAssignableFrom(f.getFeature().getClass())) {
 				List<Value> args = new ArrayList<Value>();
 				args.add(eval.getRoot());
 				args.addAll(f.args());

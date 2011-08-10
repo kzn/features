@@ -11,17 +11,17 @@ import com.spinn3r.log5j.Logger;
  */
 public interface FeatureBuilder {
 	
-	public Feature build(List<Value> args);
+	public FeatureFunction build(List<Value> args);
 	public static class Class implements FeatureBuilder {
 		private final static Logger logger = Logger.getLogger();
-		java.lang.Class<? extends Feature> cls;
+		java.lang.Class<? extends FeatureFunction> cls;
 		
-		public Class(java.lang.Class<? extends Feature> cls) {
+		public Class(java.lang.Class<? extends FeatureFunction> cls) {
 			this.cls = cls;
 		}
 		
 		@Override
-		public Feature build(List<Value> args) {
+		public FeatureFunction build(List<Value> args) {
 			if(cls == null)
 				return null;
 			

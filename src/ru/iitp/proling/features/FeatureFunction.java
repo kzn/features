@@ -7,7 +7,7 @@ import java.util.List;
  * @author ant
  *
  */
-public interface Feature {
+public interface FeatureFunction {
 	/**
 	 * This interface indicates that the first element of the feature
 	 * is an injected root element.
@@ -28,22 +28,10 @@ public interface Feature {
 	 * @return
 	 */
 	public String name();
-	
-	/**
-	 * Return feature function arguments
-	 */
-	//public List<Value> args();
-	
+		
 	/**
 	 * Evaluate feature and store result in a value object
 	 * @param res result value object
 	 */
 	public void eval(Value.Settable res, List<Value> args);
-	
-	/**
-	 * Write feature function complete name to StringBuilder
-	 * @param sb target string builder
-	 * @return sb object
-	 */
-	//public StringBuilder toStringBuilder(StringBuilder sb);
 }
