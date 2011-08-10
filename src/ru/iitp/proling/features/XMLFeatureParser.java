@@ -37,7 +37,7 @@ public class XMLFeatureParser {
 		}
 	}
 
-	protected FeatureValue parseFeature(XMLStreamReader reader) throws XMLStreamException {
+	protected Feature parseFeature(XMLStreamReader reader) throws XMLStreamException {
 		String name = "";
 		List<Value> args = new ArrayList<Value>();
 
@@ -61,7 +61,7 @@ public class XMLFeatureParser {
 			return null;
 		
 		FeatureFunction f = fb.build(name, args);
-		FeatureValue fv = new FeatureValue(f, new SimpleValue());
+		Feature fv = new Feature(f, new SimpleValue());
 		Value fv0 = eval.get(fv);
 		
 		if(fv == fv0) {
@@ -69,7 +69,7 @@ public class XMLFeatureParser {
 				eval.setArg(fv, arg);
 		}
 		
-		return (FeatureValue) fv0;
+		return (Feature) fv0;
 	}
 
 	private Value parseArg(XMLStreamReader reader) throws XMLStreamException {

@@ -2,7 +2,7 @@ package ru.iitp.proling.features;
 
 import java.util.List;
 
-import ru.iitp.proling.features.Values.Simple;
+import ru.iitp.proling.features.Values.Var;
 
 import com.google.common.base.Objects;
 
@@ -17,19 +17,19 @@ import com.google.common.base.Objects;
  * @author Anton Kazennikov
  *
  */
-public class FeatureValue implements Value.Clearable {
+public class Feature implements Value.Clearable {
 	FeatureFunction f;
 	List<Value> args;
-	Values.Simple v;
+	Values.Var v;
 	
 	
-	public FeatureValue(FeatureFunction f, Values.Simple v, List<Value> args) {
+	public Feature(FeatureFunction f, Values.Var v, List<Value> args) {
 		this.f = f;
 		this.v = v;
 		this.args = args;
 	}
 	
-	public FeatureValue() {
+	public Feature() {
 		
 	}
 	
@@ -66,9 +66,9 @@ public class FeatureValue implements Value.Clearable {
 			return true;
 		if (obj == null)
 			return false;
-		if (!(obj instanceof FeatureValue))
+		if (!(obj instanceof Feature))
 			return false;
-		FeatureValue other = (FeatureValue) obj;
+		Feature other = (Feature) obj;
 		
 		return Objects.equal(other.f, f) && Objects.equal(other.args, args);
 	}
@@ -99,7 +99,7 @@ public class FeatureValue implements Value.Clearable {
 		return args.get(i);
 	}
 
-	public Simple getValue() {
+	public Var getValue() {
 		return v;
 	}
 	

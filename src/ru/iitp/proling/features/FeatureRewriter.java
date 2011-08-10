@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public interface FeatureRewriter {
-	public FeatureValue rewrite(FeatureValue f);
+	public Feature rewrite(Feature f);
 	
 	public static class RootInjector implements FeatureRewriter {
 		FeatureExtractor eval;
@@ -15,12 +15,12 @@ public interface FeatureRewriter {
 		}
 
 		@Override
-		public FeatureValue rewrite(FeatureValue f) {
+		public Feature rewrite(Feature f) {
 			if(FeatureFunction.Injectable.class.isAssignableFrom(f.getFeature().getClass())) {
 				List<Value> args = new ArrayList<Value>();
 				args.add(eval.getRoot());
 				args.addAll(f.args());
-				return eval.get(new FeatureValue(f.getFeature(), new Values.Simple(), args));
+				return eval.get(new Feature(f.getFeature(), new Values.Var(), args));
 			}
 			
 			return f;
@@ -41,17 +41,17 @@ public interface FeatureRewriter {
 		}
 
 		@Override
-		public FeatureValue rewrite(FeatureValue f) {
+		public Feature rewrite(Feature f) {
 			if(CommonFeatures.Indexed.class.isAssignableFrom(f.getFeature().getClass())) {
 				if(f.args().size() == 2)
 					return f;
 				
 				List<Value> newArgs = new ArrayList<Value>();
 				for(int i = 1; i != f.args().size(); i++) {
-					newArgs.add(eval.get(new FeatureValue(f.getFeature(), new Values.Simple(), Arrays.asList(f.args.get(0), f.args().get(i)))));
+					newArgs.add(eval.get(new Feature(f.getFeature(), new Values.Var(), Arrays.asList(f.args.get(0), f.args().get(i)))));
 				}
 				
-				return (FeatureValue)eval.get(new FeatureValue(new CommonFeatures.Tuple(), f.getValue(), newArgs));
+				return (Feature)eval.get(new Feature(new CommonFeatures.Tuple(), f.getValue(), newArgs));
 			}
 
 			return f;

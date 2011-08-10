@@ -23,34 +23,85 @@ import java.util.Map;
  *
  */
 public class FeatureRegister {
-	Map<String, FeatureBuilder> builders = new HashMap<String, FeatureBuilder>();
+	Map<String, FeatureFunction.Provider> providers = new HashMap<String, FeatureFunction.Provider>();
 	
-	public FeatureRegister() {
-		register("tuple", CommonFeatures.Tuple.class);
+	/**
+	 * Identity provider. Provides specified FeatureFunction
+	 * @author Anton Kazennikov
+	 *
+	 */
+	public static class IdentityProvider implements FeatureFunction.Provider {
+		final FeatureFunction fun;
+		
+		public IdentityProvider(FeatureFunction fun) {
+			this.fun = fun;
+		}
+
+		@Override
+		public FeatureFunction get() {
+			return fun;
+		}
 	}
 	
-	public FeatureFunction build(String name, List<Value> values) {
-		FeatureBuilder b = builders.get(name);
+	public FeatureRegister() {
+		register("tuple", new CommonFeatures.Tuple());
+	}
+	
+	/**
+	 * Get feature function by name.
+	 * @param name feature function name
+	 * @return FeatureFunction if it exists, or null
+	 */
+	public FeatureFunction get(String name) {
+		FeatureFunction.Provider b = providers.get(name);
 		if(b != null)
-			return b.build(values);
+			return b.get();
 		
 		return null;
 	}
 	
-	public void register(String name, FeatureBuilder fb) {
-		builders.put(name, fb);
+	/**
+	 * Register feature function with its default name
+	 * @param fun
+	 */
+	public void register(FeatureFunction fun) {
+		register(fun.name(), fun);
 	}
 	
-	public void register(String name, Class<? extends FeatureFunction> cls) {
-		register(name, builderFor(cls));
+	/**
+	 * Register feature function provider with custom name
+	 * @param name feature function name
+	 * @param provider feature function provider
+	 */
+	public void register(String name, FeatureFunction.Provider provider) {
+		providers.put(name, provider);
 	}
 	
-	public static FeatureBuilder builderFor(final Class<? extends FeatureFunction> cls) {
-		return new FeatureBuilder.Class(cls);
+	/**
+	 * Register feature function with specified name
+	 * @param name feature function name
+	 * @param fun feature function to register
+	 */
+	public void register(String name, FeatureFunction fun) {
+		providers.put(name, identityFor(fun));
 	}
-
+	
+	/**
+	 * Check if this register contains a function with specified name
+	 * @param name
+	 * @return
+	 */
 	public boolean contains(String name) {
-		return builders.containsKey(name);
+		return providers.containsKey(name);
+	}
+	
+	/**
+	 * Static method to create identity providers for feature functions
+	 * @param fun feature function
+	 * @return fresh feature function provider
+	 */
+	public static FeatureFunction.Provider identityFor(FeatureFunction fun) {
+		return new IdentityProvider(fun);
 	}
 	
 	

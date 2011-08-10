@@ -3,10 +3,10 @@ package ru.iitp.proling.features;
 import com.google.common.base.Objects;
 
 public class Values {
-	public static final class Final implements Value {
+	public static final class Const implements Value {
 		final Object value;
 		
-		public Final(Object value) {
+		public Const(Object value) {
 			this.value = value;
 		}
 		
@@ -45,9 +45,9 @@ public class Values {
 				return true;
 			if (obj == null)
 				return false;
-			if (!(obj instanceof Final))
+			if (!(obj instanceof Const))
 				return false;
-			Final other = (Final) obj;
+			Const other = (Const) obj;
 			return Objects.equal(other.value, value);
 		}
 		
@@ -59,14 +59,14 @@ public class Values {
 	}
 
 
-	public static class Simple implements Value.Mutable {
+	public static class Var implements Value.Mutable {
 		Object value;
 
-		public Simple() {
+		public Var() {
 
 		}
 
-		public Simple(Object value) {
+		public Var(Object value) {
 			this.value = value;
 		}
 
@@ -115,9 +115,9 @@ public class Values {
 				return true;
 			if (obj == null)
 				return false;
-			if (!(obj instanceof Simple))
+			if (!(obj instanceof Var))
 				return false;
-			Simple other = (Simple) obj;
+			Var other = (Var) obj;
 			return Objects.equal(other.value, value);
 		}
 

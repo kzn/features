@@ -8,6 +8,10 @@ import java.util.List;
  *
  */
 public interface FeatureFunction {
+	public interface Provider {
+		public FeatureFunction get();
+	}
+	
 	/**
 	 * This interface indicates that the first element of the feature
 	 * is an injected root element.

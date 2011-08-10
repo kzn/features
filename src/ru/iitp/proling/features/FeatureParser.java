@@ -71,7 +71,7 @@ public class FeatureParser {
 	 * @param eval
 	 * @return
 	 */
-	FeatureValue parseFeature(Tree tree, FeatureExtractor eval) {
+	Feature parseFeature(Tree tree, FeatureExtractor eval) {
 		String name = tree.getText();
 		List<Value> args = new ArrayList<Value>();
 		
@@ -79,11 +79,11 @@ public class FeatureParser {
 			args.add(parseArg(tree.getChild(i), eval));
 		}
 		
-		FeatureFunction f = fb.build(name, args);
-		FeatureValue fv = eval.rewrite(new FeatureValue(f, new Values.Simple(), args));
-		FeatureValue fv0 = eval.get(fv);
+		FeatureFunction f = fb.get(name);
+		Feature fv = eval.rewrite(new Feature(f, new Values.Var(), args));
+		Feature fv0 = eval.get(fv);
 				
-		return (FeatureValue) fv0;
+		return (Feature) fv0;
 	}
 	
 	/**
@@ -102,13 +102,13 @@ public class FeatureParser {
 			return parseFeature(tree, eval);
 		
 		if(text.isEmpty())
-			return new Values.Final("");
+			return new Values.Const("");
 		
 		if(text.charAt(0) == '"')
 			return parseString(text);
 		
 		int i = Integer.parseInt(text);
-		return new Values.Final(Integer.valueOf(i));
+		return new Values.Const(Integer.valueOf(i));
 	}
 
 
@@ -128,7 +128,7 @@ public class FeatureParser {
 				
 		}
 
-		return new Values.Final(sb.toString());
+		return new Values.Const(sb.toString());
 	}
 
 }

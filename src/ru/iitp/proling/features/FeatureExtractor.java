@@ -15,9 +15,9 @@ import java.util.Set;
 public class FeatureExtractor {
 	List<Value> f = new ArrayList<Value>();
 	
-	Values.Simple root = new Values.Simple();
-	Set<FeatureValue> toClear = new HashSet<FeatureValue>();
-	Map<FeatureValue, FeatureValue> funSet = new HashMap<FeatureValue, FeatureValue>();
+	Values.Var root = new Values.Var();
+	Set<Feature> toClear = new HashSet<Feature>();
+	Map<Feature, Feature> funSet = new HashMap<Feature, Feature>();
 	List<FeatureRewriter> rewriters = new ArrayList<FeatureRewriter>();
 	
 	
@@ -31,7 +31,7 @@ public class FeatureExtractor {
 	 * Clear cached values for reevaluation of the features
 	 */
 	public void clear() {
-		for(FeatureValue v : toClear)
+		for(Feature v : toClear)
 			v.clear();
 	}
 	
@@ -78,11 +78,11 @@ public class FeatureExtractor {
 	 * @param v
 	 * @return
 	 */
-	public FeatureValue get(FeatureValue v) {
-		if(v instanceof FeatureValue) {
+	public Feature get(Feature v) {
+		if(v instanceof Feature) {
 			if(funSet.containsKey(v))
 				return funSet.get(v);
-			toClear.add((FeatureValue)v);
+			toClear.add((Feature)v);
 			funSet.put(v, v);
 		} 
 		
@@ -94,7 +94,7 @@ public class FeatureExtractor {
 	 * @param f
 	 * @return
 	 */
-	public FeatureValue rewrite(FeatureValue f) {
+	public Feature rewrite(Feature f) {
 		for(FeatureRewriter fr : rewriters) {
 			f = fr.rewrite(f);
 		}
@@ -106,7 +106,7 @@ public class FeatureExtractor {
 	 * Add feature to the list for extraction
 	 * @param f
 	 */
-	public void addFeature(FeatureValue f) {
+	public void addFeature(Feature f) {
 		this.f.add(get(f));
 	}
 
@@ -114,7 +114,7 @@ public class FeatureExtractor {
 	 * Get root value object
 	 * @return
 	 */
-	public Values.Simple getRoot() {
+	public Values.Var getRoot() {
 		return root;
 	}
 }
