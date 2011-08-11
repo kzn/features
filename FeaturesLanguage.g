@@ -19,7 +19,24 @@ features: feature+;
 arg: (feat | STRING);
 
 
-feat: SIMPLE^ ('('! arg (','! arg)* ')'!)?; 
+
+args: '(' arg (',' arg)* ')' -> arg+;
+
+feat_simple: SIMPLE (
+		     '(' arg (',' arg)* ')' -> ^(SIMPLE arg+)
+		     | -> ^(SIMPLE));
+
+array: '[' SIMPLE (',' SIMPLE)* ']' -> SIMPLE+;
+
+simple_or_array: feat_simple (
+			 array -> ^(SIMPLE["array"] feat_simple array)
+			 | -> feat_simple);
+
+feat: simple_or_array
+	      ('{' feature+ '}' -> ^(SIMPLE["#tuple"] simple_or_array feature+)
+	      | -> ^(simple_or_array)
+	      ) ;
+
 
 angle_pair: '<' arg (',' arg)+ '>' -> ^(SIMPLE["tuple"] arg+); 
 feature: feats |  angle_pair;
@@ -30,7 +47,7 @@ feats: feat (
 WS: (' ' | '\t' | '\n' | '\r')+ { $channel = HIDDEN;};
 SINGLE_COMMENT: '//' ~('\r' | '\n')* {$channel = HIDDEN;};
 
-header: '['! .* ']'!;
 STRING : '"' (~('"' | '\\') | '\\' .)* '"';
-SIMPLE: ~('(' | ')' | ' ' | ',' | '<' | '>' | '\t' | '\r' | '\n' )+;
+SIMPLE: ~('(' | ')' | ' ' | ',' | '<' | '>' | '\t' | '\r' | '\n' | '{' | '}' |
+		'[' | ']' )+;
 
