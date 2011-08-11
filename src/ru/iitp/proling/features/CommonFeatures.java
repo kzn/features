@@ -3,6 +3,8 @@ package ru.iitp.proling.features;
 import java.util.ArrayList;
 import java.util.List;
 
+import ru.iitp.proling.features.Value.Settable;
+
 import com.google.common.base.Objects;
 
 
@@ -117,6 +119,33 @@ public class CommonFeatures {
 		public int getIndex(List<Value> args) {
 			return (Integer)args.get(1).get();
 		}
+	}
+	
+	public static class Array implements FeatureFunction {
+
+		@Override
+		public String name() {
+			return "array";
+		}
+
+		@Override
+		public void eval(Settable res, List<Value> args) {
+			List<?> arr = (List<?>)args.get(0).get();
+			if(args.size() == 2) {
+				int index = (Integer)args.get(1).get();
+				if(index >= 0 && index < arr.size())
+					res.set(arr.get(index));
+			} else {
+				List<Object> values = new ArrayList<Object>();
+				for(int i = 1; i < args.size(); i++) {
+					int index = (Integer)args.get(i).get();
+					if(index >= 0 && index < arr.size())
+						values.add(arr.get(index));
+				}
+				res.set(values);
+			}
+		}
+		
 	}
 	
 
