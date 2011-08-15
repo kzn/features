@@ -34,34 +34,34 @@ public class ASTTest extends TestCase {
 	
 	@Test
 	public void testSingleDefinition() {
-		assertEquals(ast("p"), "p");
-		assertEquals(ast("p(1)"), "(p 1)");
-		assertEquals(ast("p(1) p(2)"), "(p 1) (p 2)");
-		assertEquals(ast("p(1,2)"), "(p 1 2)");
+		assertEquals(ast("p"), "(seq p)");
+		assertEquals(ast("p(1)"), "(seq (p 1))");
+		assertEquals(ast("p(1) p(2)"), "(seq (p 1) (p 2))");
+		assertEquals(ast("p(1,2)"), "(seq (p 1 2))");
 	}
 	
 	@Test
 	public void testString() {
-		assertEquals(ast("p(1, \"foo\")"), "(p 1 \"foo\")");
-		assertEquals(ast("p(1, \"foo\\\"bar\")"), "(p 1 \"foo\\\"bar\")");
+		assertEquals(ast("p(1, \"foo\")"), "(seq (p 1 \"foo\"))");
+		assertEquals(ast("p(1, \"foo\\\"bar\")"), "(seq (p 1 \"foo\\\"bar\"))");
 	}
 	
 	@Test
 	public void testPair() {
-		assertEquals(ast("p(1),p(2)"), "(tuple (p 1) (p 2))");
-		assertEquals(ast("<p(1),p(2)>"), "(tuple (p 1) (p 2))");
+		assertEquals(ast("p(1),p(2)"), "(seq (tuple (p 1) (p 2)))");
+		assertEquals(ast("<p(1),p(2)>"), "(seq (tuple (p 1) (p 2)))");
 	}
 	
 	@Test
 	public void testSpecialTuple() {
-		assertEquals(ast("p(0){p(1) p(3)}"), "(#tuple (p 0) (p 1) (p 3))");
+		assertEquals(ast("p(0){p(1) p(3)}"), "(seq (TUPLE (p 0) (p 1) (p 3)))");
 	}
 	
 	@Test
 	public void testArray() {
-		assertEquals(ast("p(0)[5]"), "(array (p 0) 5)");
-		assertEquals(ast("p(0)[5,2]"), "(array (p 0) 5 2)");
-		assertEquals(ast("p(0)[5,2] { w(1) w(2)}"), "(#tuple (array (p 0) 5 2) (w 1) (w 2))");
+		assertEquals(ast("p(0)[5]"), "(seq (array (p 0) 5))");
+		assertEquals(ast("p(0)[5,2]"), "(seq (array (p 0) 5 2))");
+		assertEquals(ast("p(0)[5,2] { w(1) w(2)}"), "(seq (TUPLE (array (p 0) 5 2) (w 1) (w 2)))");
 	}
 
 }
