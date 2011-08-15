@@ -22,8 +22,10 @@ public class FeatureExtractor {
 	
 	
 	public FeatureExtractor() {
+		rewriters.add(new FeatureRewriter.SpecialTupleRewriter());
 		rewriters.add(new FeatureRewriter.RootInjector(this));
 		rewriters.add(new FeatureRewriter.IndexedTuple(this));
+		rewriters.add(new FeatureRewriter.SequenceRewriter());
 		rewriters.add(new FeatureRewriter.MinimizeRewriter(this));
 	}
 	
