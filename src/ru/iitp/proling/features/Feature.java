@@ -105,5 +105,9 @@ public class Feature implements Value.Clearable {
 		return v;
 	}
 	
+	public void setArgs(List<Value> args) {
+		this.args = args;
+	}
+	
 	
 }

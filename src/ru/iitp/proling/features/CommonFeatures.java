@@ -145,8 +145,29 @@ public class CommonFeatures {
 				res.set(values);
 			}
 		}
-		
 	}
+	
+	public static class Sequence implements FeatureFunction {
+
+		@Override
+		public String name() {
+			return "seq";
+		}
+
+		@Override
+		public void eval(Settable res, List<Value> args) {
+			List<Object> vals = new ArrayList<Object>();
+			
+			for(Value arg : args) {
+				vals.add(arg.get());
+			}
+			
+			res.set(vals);
+		}
+	}
+	
+	public static final Tuple tuple = new Tuple();
+	public static final Sequence sequence = new Sequence();
 	
 
 }

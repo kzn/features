@@ -1,7 +1,10 @@
 package ru.iitp.proling.features;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Deque;
 import java.util.List;
 
 public interface FeatureRewriter {
@@ -29,6 +32,8 @@ public interface FeatureRewriter {
 					args.add(arg);
 				}
 			}
+			
+			
 			return new Feature(f.getFeature(), new Values.Var(), args);
 		}
 	}
@@ -65,6 +70,15 @@ public interface FeatureRewriter {
 				}
 				
 				return (Feature)eval.get(new Feature(new CommonFeatures.Tuple(), f.getValue(), newArgs));
+			} else {
+				List<Value> args = new ArrayList<Value>();
+				for(Value arg : f.args()) {
+					if(arg instanceof Feature) {
+						arg = rewrite((Feature) arg);
+					}
+					args.add(arg);
+				}
+				f.setArgs(args);
 			}
 
 			return f;
@@ -94,6 +108,99 @@ public interface FeatureRewriter {
 			}
 			
 			return eval.get(new Feature(f.getFeature(), new Values.Var(), args));
+		}
+	}
+	
+	public static class SpecialTupleRewriter implements FeatureRewriter {
+
+		@Override
+		public Feature rewrite(Feature f) {
+			List<Value> args = new ArrayList<Value>();
+			for(Value arg : f.args()) {
+				if(arg instanceof Feature) {
+					Feature feat = rewrite((Feature)arg);
+					if(feat.getFeature() == CommonFeatures.sequence)
+						args.addAll(feat.args());
+					else 
+						args.add(feat);
+				} else {
+					args.add(arg);
+				}
+			}
+			
+			if(f instanceof FeatureParser.Special) {
+				List<Value> feats = new ArrayList<Value>();
+				Value base = args.get(0);
+				
+				for(int i = 1; i != args.size(); i++) {
+					feats.add(new Feature(CommonFeatures.tuple, new Values.Var(), Arrays.asList(base, args.get(i))));
+				}
+				
+				return new Feature(CommonFeatures.sequence, new Values.Var(), feats);
+			} 
+			
+			f.setArgs(args);
+			return f;
+		}		
+	}
+	
+	public static class SequenceRewriter implements FeatureRewriter {
+
+		@Override
+		public Feature rewrite(Feature f) {
+			Deque<Value> q = new ArrayDeque<Value>(f.args());
+			List<Value> args = new ArrayList<Value>();
+			
+			while(!q.isEmpty()) {
+				Value v = q.pollFirst();
+				if(v instanceof Feature) {
+					Feature feat = (Feature)v;
+					if(feat.getFeature() == CommonFeatures.sequence) {
+						List<Value> seqArgs = new ArrayList<Value>(feat.args());
+						Collections.reverse(seqArgs);
+						for(Value val : seqArgs) {
+							q.addFirst(val);
+						}
+						continue;
+					} else {
+						v = rewrite((Feature)v);
+					}
+				}
+				args.add(v);
+			}
+			
+			f.setArgs(args);
+			return f;
+		}
+	}
+	
+	public static class TupleSimplifier implements FeatureRewriter {
+
+		@Override
+		public Feature rewrite(Feature f) {
+			Deque<Value> q = new ArrayDeque<Value>(f.args());
+			List<Value> args = new ArrayList<Value>();
+			
+			while(!q.isEmpty()) {
+				Value v = q.pollFirst();
+				if(v instanceof Feature) {
+					Feature feat = (Feature)v;
+					if(feat.getFeature() == CommonFeatures.tuple && f.getFeature() == CommonFeatures.tuple) {
+						List<Value> seqArgs = new ArrayList<Value>(feat.args());
+						Collections.reverse(seqArgs);
+						for(Value val : seqArgs) {
+							q.addFirst(val);
+						}
+						continue;
+					} else {
+						v = rewrite((Feature)v);
+					}
+				}
+				args.add(v);
+			}
+			
+			f.setArgs(args);
+			return f;
 		}
 		
 	}

@@ -63,7 +63,8 @@ public class FeatureRegister {
 	}
 	
 	public FeatureRegister() {
-		register("tuple", new CommonFeatures.Tuple());
+		register("tuple", CommonFeatures.tuple);
+		register("seq", CommonFeatures.sequence);
 	}
 	
 	/**

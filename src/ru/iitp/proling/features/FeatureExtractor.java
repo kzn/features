@@ -26,6 +26,7 @@ public class FeatureExtractor {
 		rewriters.add(new FeatureRewriter.RootInjector(this));
 		rewriters.add(new FeatureRewriter.IndexedTuple(this));
 		rewriters.add(new FeatureRewriter.SequenceRewriter());
+		rewriters.add(new FeatureRewriter.TupleSimplifier());
 		rewriters.add(new FeatureRewriter.MinimizeRewriter(this));
 	}
 	
@@ -134,5 +135,9 @@ public class FeatureExtractor {
 		sb.append(']');
 		
 		return sb.toString();
+	}
+	
+	public List<Feature> get() {
+		return f;
 	}
 }
