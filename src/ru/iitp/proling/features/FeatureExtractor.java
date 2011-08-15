@@ -118,4 +118,19 @@ public class FeatureExtractor {
 	public Values.Var getRoot() {
 		return root;
 	}
+	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append('[');
+		for(int i = 0; i != f.size(); i++) {
+			if(i != 0)
+				sb.append(", ");
+			sb.append(i+1).append('=').append(f.get(i).toString());
+		}
+		
+		sb.append(']');
+		
+		return sb.toString();
+	}
 }

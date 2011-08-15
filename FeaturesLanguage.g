@@ -6,6 +6,10 @@ options {
   ASTLabelType = CommonTree;
 }
 
+tokens {
+    TUPLE;
+}
+
 
 @header {
   package ru.iitp.proling.features;
@@ -15,7 +19,7 @@ options {
   package ru.iitp.proling.features;
 }
 
-features: feature+;
+features: feature+ -> ^(SIMPLE["tuple"] feature+);
 arg: (feat | STRING);
 
 
@@ -33,7 +37,7 @@ simple_or_array: feat_simple (
 			 | -> feat_simple);
 
 feat: simple_or_array
-	      ('{' feature+ '}' -> ^(SIMPLE["#tuple"] simple_or_array feature+)
+	      ('{' feature+ '}' -> ^(TUPLE simple_or_array feature+)
 	      | -> ^(simple_or_array)
 	      ) ;
 
