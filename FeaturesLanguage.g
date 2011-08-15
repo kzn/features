@@ -19,7 +19,7 @@ tokens {
   package ru.iitp.proling.features;
 }
 
-features: feature+ -> ^(SIMPLE["tuple"] feature+);
+features: feature+ -> ^(SIMPLE["seq"] feature+);
 arg: (feat | STRING);
 
 
