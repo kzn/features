@@ -16,14 +16,20 @@ public interface FeatureRewriter {
 
 		@Override
 		public Feature rewrite(Feature f) {
+			List<Value> args = new ArrayList<Value>();
+
 			if(FeatureFunction.Injectable.class.isAssignableFrom(f.getFeature().getClass())) {
-				List<Value> args = new ArrayList<Value>();
 				args.add(eval.getRoot());
-				args.addAll(f.args());
-				return eval.get(new Feature(f.getFeature(), new Values.Var(), args));
 			}
 			
-			return f;
+			for(Value arg : f.args()) {
+				if(arg instanceof Feature) {
+					args.add(rewrite((Feature)arg));
+				} else {
+					args.add(arg);
+				}
+			}
+			return new Feature(f.getFeature(), new Values.Var(), args);
 		}
 	}
 	
@@ -42,13 +48,20 @@ public interface FeatureRewriter {
 
 		@Override
 		public Feature rewrite(Feature f) {
+			
 			if(CommonFeatures.Indexed.class.isAssignableFrom(f.getFeature().getClass())) {
 				if(f.args().size() == 2)
 					return f;
 				
 				List<Value> newArgs = new ArrayList<Value>();
 				for(int i = 1; i != f.args().size(); i++) {
-					newArgs.add(eval.get(new Feature(f.getFeature(), new Values.Var(), Arrays.asList(f.args.get(0), f.args().get(i)))));
+					Value arg = null;
+					if(f.args().get(i) instanceof Feature) {
+						arg = rewrite((Feature)f.args().get(i));
+					} else {
+						arg = f.args().get(i);
+					}
+					newArgs.add(eval.get(new Feature(f.getFeature(), new Values.Var(), Arrays.asList(f.args.get(0), arg))));
 				}
 				
 				return (Feature)eval.get(new Feature(new CommonFeatures.Tuple(), f.getValue(), newArgs));
@@ -56,5 +69,32 @@ public interface FeatureRewriter {
 
 			return f;
 		}
+	}
+	
+	public static class MinimizeRewriter implements FeatureRewriter {
+		FeatureExtractor eval;
+		
+		public MinimizeRewriter(FeatureExtractor eval) {
+			this.eval = eval;
+		}
+
+		@Override
+		public Feature rewrite(Feature f) {
+			List<Value> args = new ArrayList<Value>();
+			
+			for(Value arg : f.args()) {
+				Value v = null;
+				if(arg instanceof Feature) {
+					v = rewrite((Feature)arg);
+				} else {
+					v = arg;
+				}
+				
+				args.add(v);
+			}
+			
+			return eval.get(new Feature(f.getFeature(), new Values.Var(), args));
+		}
+		
 	}
 }

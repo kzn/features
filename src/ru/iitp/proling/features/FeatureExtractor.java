@@ -13,7 +13,7 @@ import java.util.Set;
  *
  */
 public class FeatureExtractor {
-	List<Value> f = new ArrayList<Value>();
+	List<Feature> f = new ArrayList<Feature>();
 	
 	Values.Var root = new Values.Var();
 	Set<Feature> toClear = new HashSet<Feature>();
@@ -24,6 +24,7 @@ public class FeatureExtractor {
 	public FeatureExtractor() {
 		rewriters.add(new FeatureRewriter.RootInjector(this));
 		rewriters.add(new FeatureRewriter.IndexedTuple(this));
+		rewriters.add(new FeatureRewriter.MinimizeRewriter(this));
 	}
 	
 	

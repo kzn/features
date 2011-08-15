@@ -55,13 +55,27 @@ public class FeatureParser {
 	 */
 	FeatureExtractor parse(Tree tree) {
 		FeatureExtractor eval = new FeatureExtractor();
+		List<Feature> feats = new ArrayList<Feature>();
+		
 		if(tree.getText() != null) {
-			eval.addFeature(parseFeature(tree, eval));
+			feats.add(parseFeature(tree));
 		} else {
 			for(int i = 0; i != tree.getChildCount(); i++)
-				eval.addFeature(parseFeature(tree.getChild(i),eval));
+				feats.add(parseFeature(tree.getChild(i)));
 		}
 		
+		for(FeatureRewriter rewriter : eval.rewriters) {
+			List<Feature> newFeats = new ArrayList<Feature>();
+			for(Feature f : feats) {
+				newFeats.add(rewriter.rewrite(f));
+			}
+			feats = newFeats;
+		}
+		
+		for(Feature f : feats) {
+			eval.addFeature(f);
+		}
+				
 		return eval;
 	}
 
@@ -71,35 +85,33 @@ public class FeatureParser {
 	 * @param eval
 	 * @return
 	 */
-	Feature parseFeature(Tree tree, FeatureExtractor eval) {
+	Feature parseFeature(Tree tree) {
 		String name = tree.getText();
 		List<Value> args = new ArrayList<Value>();
 		
 		for(int i = 0; i != tree.getChildCount(); i++) {
-			args.add(parseArg(tree.getChild(i), eval));
+			args.add(parseArg(tree.getChild(i)));
 		}
 		
 		FeatureFunction f = fb.get(name);
-		Feature fv = eval.rewrite(new Feature(f, new Values.Var(), args));
-		Feature fv0 = eval.get(fv);
 				
-		return (Feature) fv0;
+		return new Feature(f, new Values.Var(), args);
 	}
 	
 	/**
 	 * Parses a feature argument value
 	 */
-	Value parseArg(Tree tree, FeatureExtractor eval) {
-		return tree.getChildCount() == 0? parseSimpleArg(tree, eval) : parseFeature(tree, eval);
+	Value parseArg(Tree tree) {
+		return tree.getChildCount() == 0? parseSimpleArg(tree) : parseFeature(tree);
 	}
 		
 	/**
 	 * Parses a simple(terminal) feature argument
 	 */
-	Value parseSimpleArg(Tree tree, FeatureExtractor eval) {
+	Value parseSimpleArg(Tree tree) {
 		String text = tree.getText();
 		if(fb.contains(text))
-			return parseFeature(tree, eval);
+			return parseFeature(tree);
 		
 		if(text.isEmpty())
 			return new Values.Const("");
