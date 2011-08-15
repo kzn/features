@@ -16,6 +16,18 @@ import org.antlr.runtime.tree.Tree;
  *
  */
 public class FeatureParser {
+	protected static class Special extends Feature {
+		int type;
+		String token;
+		public Special(int type, String token, List<Value> args) {
+			super(null, null, args);
+			this.type = type;
+			this.token = token;
+		}
+		
+		
+	}
+	
 	FeatureRegister fb;
 	
 	public FeatureParser(FeatureRegister fb) {
@@ -55,26 +67,21 @@ public class FeatureParser {
 	 */
 	FeatureExtractor parse(Tree tree) {
 		FeatureExtractor eval = new FeatureExtractor();
-		List<Feature> feats = new ArrayList<Feature>();
+		Feature feats = parseFeature(tree);
 		
-		if(tree.getText() != null) {
-			feats.add(parseFeature(tree));
-		} else {
-			for(int i = 0; i != tree.getChildCount(); i++)
-				feats.add(parseFeature(tree.getChild(i)));
-		}
+		//List<Feature> feats = new ArrayList<Feature>();
+		
+		
 		
 		for(FeatureRewriter rewriter : eval.rewriters) {
-			List<Feature> newFeats = new ArrayList<Feature>();
-			for(Feature f : feats) {
-				newFeats.add(rewriter.rewrite(f));
-			}
-			feats = newFeats;
+			feats = rewriter.rewrite(feats);
 		}
 		
-		for(Feature f : feats) {
-			eval.addFeature(f);
+		for(Value v : feats.args()) {
+			if(v instanceof Feature)
+				eval.addFeature((Feature)v);
 		}
+
 				
 		return eval;
 	}
@@ -92,10 +99,16 @@ public class FeatureParser {
 		for(int i = 0; i != tree.getChildCount(); i++) {
 			args.add(parseArg(tree.getChild(i)));
 		}
-		
-		FeatureFunction f = fb.get(name);
+		Feature feat = null;
+
+		if(tree.getType() == FeaturesLanguageLexer.SIMPLE) {
+			FeatureFunction f = fb.get(name);
+			feat = new Feature(f, new Values.Var(), args);
+		} else {
+			feat = new Special(tree.getType(), name, args);
+		}
 				
-		return new Feature(f, new Values.Var(), args);
+		return feat;
 	}
 	
 	/**
