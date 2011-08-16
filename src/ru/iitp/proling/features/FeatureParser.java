@@ -25,7 +25,13 @@ public class FeatureParser {
 			this.token = token;
 		}
 		
+		public int getType() {
+			return type;
+		}
 		
+		public String getToken() {
+			return token;
+		}
 	}
 	
 	FeatureRegister fb;

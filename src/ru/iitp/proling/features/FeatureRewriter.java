@@ -10,6 +10,35 @@ import java.util.List;
 public interface FeatureRewriter {
 	public Feature rewrite(Feature f);
 	
+	
+	public static abstract class Common implements FeatureRewriter {
+		public Feature rewriteArgs(Feature f) {
+			List<Value> args = new ArrayList<Value>();
+			
+			for(Value v : f.args()) {
+				args.add(rewrite(v));
+			}
+			
+			f.setArgs(args);
+			return f;
+		}
+		
+		public Value rewrite(Value v) {
+			if(v instanceof Feature)
+				return rewrite((Feature)v);
+			return v;
+		}
+		
+		public List<Value> rewrite(List<Value> v) {
+			List<Value> r = new ArrayList<Value>(v.size());
+			for(Value val : v) {
+				r.add(rewrite(val));
+			}
+			
+			return r;
+		}
+	}
+	
 	public static class RootInjector implements FeatureRewriter {
 		FeatureExtractor eval;
 		
@@ -201,6 +230,43 @@ public interface FeatureRewriter {
 			
 			f.setArgs(args);
 			return f;
+		}
+	}
+	
+	/**
+	 * Special case for 
+	 * (TUPLE (seq n1 .. nK) arg1 ... argN) -> (TUPLE n1 arg1 ... argN) ... (TUPLE nK arg1 ... nK)
+	 * @author Anton Kazennikov
+	 *
+	 */
+	public static class SpecialTupleSequenceRewriter extends Common {
+		boolean match(Feature f) {
+			return  f instanceof FeatureParser.Special
+					&& ((FeatureParser.Special) f).getType() == FeaturesLanguageLexer.TUPLE
+					&& f.arg(0) instanceof Feature
+					&& ((Feature)f.arg(0)).getFeature() == CommonFeatures.sequence;
+		}
+		
+
+		@Override
+		public Feature rewrite(Feature f) {
+			if(match(f)) {
+				List<Value> args = new ArrayList<Value>();
+				List<Value> seq = ((Feature)f.arg(0)).args(); // sequence
+				List<Value> tupleVals = rewrite(f.args().subList(1, f.args().size()));
+
+				for(Value seqItem : seq) {
+					ArrayList<Value> fArgs = new ArrayList<Value>();
+					fArgs.add(seqItem);
+					fArgs.addAll(tupleVals);
+					args.add(new FeatureParser.Special(FeaturesLanguageLexer.TUPLE, "TUPLE", fArgs));
+				}
+				return new Feature(CommonFeatures.sequence, new Values.Var(), args);
+				
+				
+			}
+	
+			return rewriteArgs(f);
 		}
 		
 	}
