@@ -99,5 +99,11 @@ public class ParserTest extends TestCase {
 		assertEquals(parse("n(0){m(1) m(2) {p(0) p(1)}}"), "tuple(n(0), m(1)) tuple(n(0), m(2), p(0)) tuple(n(0), m(2), p(1))");
 	}
 	
+	@Test
+	public void testSpecialRewriterTupleSequence() {
+		assertEquals(parse("seq(n(0), n(1)){m(1) m(2)}"), 
+				"tuple(n(0), m(1)) tuple(n(0), m(2)) tuple(n(1), m(1)) tuple(n(1), m(2))");
+	}
+	
 
 }
