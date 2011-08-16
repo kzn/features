@@ -5,8 +5,6 @@ import java.util.List;
 
 import ru.iitp.proling.features.Value.Settable;
 
-import com.google.common.base.Objects;
-
 
 public class CommonFeatures {
 	/**
@@ -168,6 +166,7 @@ public class CommonFeatures {
 	
 	public static final Tuple tuple = new Tuple();
 	public static final Sequence sequence = new Sequence();
+	public static final Array array = new Array();
 	
 
 }
