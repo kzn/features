@@ -10,6 +10,7 @@ public interface Value {
 	 * Get actual value object
 	 */
 	public Object get();
+	public <E> E get(Class<E> cls);
 		
 	/**
 	 * Checks if value object is null. Null usually means that the value is uninitialized

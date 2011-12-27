@@ -28,6 +28,11 @@ public class Values {
 			return value;
 		}
 		
+		@Override
+		public <E> E get(Class<E> cls) {
+			return cls.cast(value);
+		}
+		
 		/* (non-Javadoc)
 		 * @see ru.iitp.proling.features.Value#isNull()
 		 */
@@ -86,6 +91,12 @@ public class Values {
 		public Object get() {
 			return value;
 		}
+		
+		@Override
+		public <E> E get(Class<E> cls) {
+			return cls.cast(value);
+		}
+
 
 		@Override
 		public void set(Object value) {

@@ -49,6 +49,12 @@ public class Feature implements Value.Clearable {
 			f.eval(v, args);
 		return v.get();
 	}
+	
+	@Override
+	public <E> E get(Class<E> cls) {
+		return cls.cast(get());
+	}
+
 
 	@Override
 	public boolean isNull() {
@@ -96,23 +102,49 @@ public class Feature implements Value.Clearable {
 		
 		return sb.toString();
 	}
-	
+	/**
+	 * Get the feature function 
+	 */
 	public FeatureFunction getFeature() {
 		return f;
 	}
 	
+	/**
+	 * Get list of arguments
+	 */
 	public List<Value> args() {
 		return args;
 	}
 	
+	/**
+	 * Get argument by index
+	 * @param i index
+	 * @return argument value
+	 */
 	public Value arg(int i) {
 		return args.get(i);
 	}
+	
+	/**
+	 * Get length of the argument list
+	 * @return
+	 */
+	public int argSize() {
+		return args.size();
+	}
 
+	/**
+	 * Get feature value
+	 * @return
+	 */
 	public Var getValue() {
 		return v;
 	}
 	
+	/**
+	 * Set arguments
+	 * @param args target arguments
+	 */
 	public void setArgs(List<Value> args) {
 		this.args = args;
 	}
