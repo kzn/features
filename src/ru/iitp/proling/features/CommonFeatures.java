@@ -56,7 +56,7 @@ public class CommonFeatures {
 
 		@Override
 		public void eval(Value.Settable res, List<Value> args) {
-			res.set(((String)args.get(0).get()).toLowerCase());
+			res.set((args.get(0).get(String.class)).toLowerCase());
 		}
 
 		@Override
@@ -99,10 +99,11 @@ public class CommonFeatures {
 	 * @param <E>
 	 */
 	public abstract static class Base<E> implements FeatureFunction, FeatureFunction.Injectable {
+		private static int INJECTED_INDEX = 0;
 		
 		@SuppressWarnings("unchecked")
 		public E getObject(List<Value> args) {
-			return (E)args.get(0).get();
+			return (E)args.get(INJECTED_INDEX).get();
 		}
 
 		
@@ -113,12 +114,27 @@ public class CommonFeatures {
 	 *
 	 */
 	public abstract static class Indexed<E> extends Base<E> implements FeatureFunction.Injectable {
+		private static int INDEX_INDEX = 1;
 
+		/**
+		 * Get the index value from the arg list
+		 * @param args argument list
+		 * @return
+		 */
 		public int getIndex(List<Value> args) {
-			return (Integer)args.get(1).get();
+			return args.get(INDEX_INDEX).get(Integer.class);
 		}
 	}
 	
+	/**
+	 * Implements array function, the [] operation.
+	 * If there is only one argument array behaves as traditional array,
+	 * returning element by index.
+	 * If there are several indices, then this feature returns a list of
+	 * elements by given indices
+	 * @author Anton Kazennikov
+	 *
+	 */
 	public static class Array implements FeatureFunction {
 
 		@Override
@@ -129,6 +145,7 @@ public class CommonFeatures {
 		@Override
 		public void eval(Settable res, List<Value> args) {
 			List<?> arr = (List<?>)args.get(0).get();
+			
 			if(args.size() == 2) {
 				int index = (Integer)args.get(1).get();
 				if(index >= 0 && index < arr.size())
@@ -145,6 +162,12 @@ public class CommonFeatures {
 		}
 	}
 	
+	/**
+	 * Sequence feature function.
+	 * Returns a list of all evaluated arguments
+	 * @author Anton Kazennikov
+	 *
+	 */
 	public static class Sequence implements FeatureFunction {
 
 		@Override
