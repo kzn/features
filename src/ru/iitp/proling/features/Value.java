@@ -12,7 +12,7 @@ public interface Value {
 	public Object get();
 		
 	/**
-	 * Checks if value object is null
+	 * Checks if value object is null. Null usually means that the value is uninitialized
 	 * @return
 	 */
 	public boolean isNull();

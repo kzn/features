@@ -2,7 +2,17 @@ package ru.iitp.proling.features;
 
 import com.google.common.base.Objects;
 
+/**
+ * Common values implementation
+ * @author Anton Kazennikov
+ *
+ */
 public class Values {
+	/**
+	 * Constant value
+	 * @author Anton Kazennikov
+	 *
+	 */
 	public static final class Const implements Value {
 		final Object value;
 		
@@ -53,7 +63,12 @@ public class Values {
 
 	}
 
-
+	/**
+	 * Generic variable implementation.
+	 * A variable is a mutable value
+	 * @author Anton Kazennikov
+	 *
+	 */
 	public static class Var implements Value.Mutable {
 		Object value;
 

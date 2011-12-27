@@ -13,7 +13,10 @@ import com.google.common.base.Objects;
  * This Value object returns result of feature evaluation.
  * Assumes that all features are pure functions, so if feature arguments
  * doesn't change, then the feature value doesn't change too. Then the 
- * feature value can be cached
+ * feature value can be cached.
+ * 
+ * <p>
+ * Implemented as a clearable function.
  * 
  * @author Anton Kazennikov
  *
@@ -23,7 +26,12 @@ public class Feature implements Value.Clearable {
 	List<Value> args;
 	Values.Var v;
 	
-	
+	/**
+	 * Create new feature object 
+	 * @param f function to compute the result value
+	 * @param v value to store the result of the evaluation of the function
+	 * @param args argument to the feature function
+	 */
 	public Feature(FeatureFunction f, Values.Var v, List<Value> args) {
 		this.f = f;
 		this.v = v;
