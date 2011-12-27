@@ -33,6 +33,11 @@ public interface Value {
 		public void clear();
 	}
 	
+	/**
+	 * Mutable value. Implements both Settable and Clearable interfaces
+	 * @author Anton Kazennikov
+	 *
+	 */
 	public interface Mutable extends Settable, Clearable {
 		
 	}
