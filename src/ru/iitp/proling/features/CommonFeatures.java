@@ -66,7 +66,8 @@ public class CommonFeatures {
 	}
 	
 	/**
-	 * Tuple feature that return a list of all its arguments
+	 * Tuple feature that return a list of all its arguments.
+	 * If any of the arguments is null, the tuple returns null
 	 * @author Anton Kazennikov
 	 *
 	 */
@@ -77,11 +78,18 @@ public class CommonFeatures {
 			List<Object> o = new ArrayList<Object>();
 			
 			for(Value v : args) {
-				o.add(v.get());
+				Object r = v.get();
+				
+				if(r == null) {
+					res.set(null);
+					return;
+				}
+				
+				o.add(r);
+			
 			}
 			
 			res.set(o);
-				
 		}
 
 		@Override
