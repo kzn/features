@@ -33,7 +33,7 @@ public class FeatureExtractor {
 	
 	
 	/**
-	 * Clear cached values for reevaluation of the features
+	 * Clear cached values for re-evaluation of the features
 	 */
 	public void clear() {
 		for(Feature v : toClear)
@@ -51,8 +51,11 @@ public class FeatureExtractor {
 		clear();
 
 		List<Object> feats = new ArrayList<Object>();
-		for(int i = 0; i != f.size(); i++)
-			feats.add(f.get(i).get());
+		for(int i = 0; i != f.size(); i++) {
+			Object v = f.get(i).get();
+			if(v != null)
+				feats.add(v);
+		}
 		
 		return feats;
 	}
@@ -69,10 +72,14 @@ public class FeatureExtractor {
 		List<String> feats = new ArrayList<String>();
 		StringBuilder sb = new StringBuilder();
 		for(int i = 0; i != f.size(); i++) {
-			sb.setLength(0);
-			sb.append(i + 1).append('=');
-			sb.append(f.get(i).get().toString());
-			feats.add(sb.toString());
+			Object v = f.get(i).get();
+			
+			if(v != null) {
+				sb.setLength(0);
+				sb.append(i + 1).append('=');
+				sb.append(v.toString());
+				feats.add(sb.toString());
+			}
 		}
 		
 		return feats;
@@ -137,7 +144,10 @@ public class FeatureExtractor {
 		
 		return sb.toString();
 	}
-	
+	/**
+	 * Get list of features used by the extractor
+	 * @return
+	 */
 	public List<Feature> get() {
 		return f;
 	}
