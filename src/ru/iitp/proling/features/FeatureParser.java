@@ -135,7 +135,7 @@ public class FeatureParser {
 		if(text.isEmpty())
 			return new Values.Const("");
 		
-		if(text.charAt(0) == '"')
+		if(text.charAt(0) == '"' || text.charAt(0) == '\'')
 			return parseString(text);
 		
 		int i = Integer.parseInt(text);
