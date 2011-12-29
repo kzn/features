@@ -37,8 +37,8 @@ public class Values {
 		 * @see ru.iitp.proling.features.Value#isNull()
 		 */
 		@Override
-		public boolean isNull() {
-			return value == null;
+		public boolean isSet() {
+			return true;
 		}
 
 		@Override
@@ -76,12 +76,14 @@ public class Values {
 	 */
 	public static class Var implements Value.Mutable {
 		Object value;
+		boolean set;
 
 		public Var() {
 		}
 
 		public Var(Object value) {
 			this.value = value;
+			set = true;
 		}
 
 		/* (non-Javadoc)
@@ -107,13 +109,13 @@ public class Values {
 		 * @see ru.iitp.proling.features.Value#isNull()
 		 */
 		@Override
-		public boolean isNull() {
-			return value == null;
+		public boolean isSet() {
+			return set;
 		}
 
 		@Override
 		public void clear() {
-			value = null;
+			set = false;
 		}
 
 		@Override

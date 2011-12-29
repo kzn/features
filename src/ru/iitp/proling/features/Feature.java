@@ -45,7 +45,7 @@ public class Feature implements Value.Clearable {
 
 	@Override
 	public Object get() {
-		if(v.isNull())
+		if(!v.isSet())
 			f.eval(v, args);
 		return v.get();
 	}
@@ -57,8 +57,8 @@ public class Feature implements Value.Clearable {
 
 
 	@Override
-	public boolean isNull() {
-		return v.isNull();
+	public boolean isSet() {
+		return v.isSet();
 	}
 
 	@Override

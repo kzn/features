@@ -16,7 +16,7 @@ public interface Value {
 	 * Checks if value object is null. Null usually means that the value is uninitialized
 	 * @return
 	 */
-	public boolean isNull();
+	public boolean isSet();
 	
 	public interface Settable extends Value {
 		/**
