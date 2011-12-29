@@ -24,7 +24,7 @@ public interface FeatureFunction {
 	 * @author Anton Kazennikov
 	 *
 	 */
-	public interface Injectable {
+	public interface Injectable extends FeatureFunction {
 	}
 	
 	/**
