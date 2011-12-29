@@ -137,9 +137,13 @@ public class FeatureParser {
 		
 		if(text.charAt(0) == '"' || text.charAt(0) == '\'')
 			return parseString(text);
+		try {
+			int i = Integer.parseInt(text);
+			return new Values.Const(Integer.valueOf(i));
+		} catch(NumberFormatException e) {
+		}
 		
-		int i = Integer.parseInt(text);
-		return new Values.Const(Integer.valueOf(i));
+		return new Values.Const(text);
 	}
 
 
