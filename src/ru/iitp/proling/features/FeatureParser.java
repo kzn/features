@@ -16,6 +16,11 @@ import org.antlr.runtime.tree.Tree;
  *
  */
 public class FeatureParser {
+	/**
+	 * Special feature, used only by feature parser for special features representation
+	 * @author Anton Kazennikov
+	 *
+	 */
 	protected static class Special extends Feature {
 		int type;
 		String token;
@@ -109,7 +114,8 @@ public class FeatureParser {
 
 		if(tree.getType() == FeaturesLanguageLexer.SIMPLE) {
 			FeatureFunction f = fb.get(name);
-			feat = new Feature(f, new Values.Var(), args);
+			feat = f != null? new Feature(f, new Values.Var(), args) : new Special(tree.getType(), name, args);
+			
 		} else {
 			feat = new Special(tree.getType(), name, args);
 		}
