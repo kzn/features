@@ -16,6 +16,11 @@ import org.antlr.runtime.tree.Tree;
  *
  */
 public class FeatureParser {
+	/**
+	 * Class for special type features like tuple
+	 * @author Anton Kazennikov
+	 *
+	 */
 	protected static class Special extends Feature {
 		int type;
 		String token;
