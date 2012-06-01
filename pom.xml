@@ -1,0 +1,80 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>ru.iitp.cl</groupId>
+  <artifactId>features</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>Features</name>
+  <description>Features language for extracting features for machine learning</description>
+  <dependencies>
+  	<dependency>
+  		<groupId>ru.iitp.cl</groupId>
+  		<artifactId>logger</artifactId>
+  		<version>0.0.1-SNAPSHOT</version>
+  	</dependency>
+	<dependency>
+  		<groupId>org.antlr</groupId>
+  		<artifactId>antlr</artifactId>
+  		<version>3.4</version>
+	</dependency>
+	<dependency>
+	    <groupId>com.google.guava</groupId>
+  		<artifactId>guava</artifactId>
+  		<version>12.0</version>
+	 </dependency>
+	    
+	 <dependency>
+	    <groupId>junit</groupId>
+  		<artifactId>junit</artifactId>
+  		<version>4.10</version>
+	 </dependency>
+	    
+
+  </dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+		<extensions>
+			<!-- Enabling the use of FTP -->
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-ssh-external</artifactId>
+			</extension>
+		</extensions>
+	</build>
+  
+  
+  
+   <distributionManagement>
+    <repository>
+      <id>iitp.cl.repo</id>
+      <name>IITP CL Lab repository</name>
+      <url>scpexe://cl.iitp.ru/maven</url>
+    </repository>
+  </distributionManagement>
+</project>
