@@ -56,6 +56,7 @@ public class ParserTest extends TestCase {
 		FeatureRegister fr = new FeatureRegister();
 		fr.register(new SimpleFeat("n"));
 		fr.register(new SimpleFeat("m"));
+		fr.register(new SimpleFeat("o"));
 		fr.register(new SimpleFeatIndexed("p"));
 		
 		FeatureParser parser = new FeatureParser(fr);
@@ -103,6 +104,18 @@ public class ParserTest extends TestCase {
 	public void testSpecialRewriterTupleSequence() {
 		assertEquals(parse("seq(n(0), n(1)){m(1) m(2)}"), 
 				"tuple(n(0), m(1)) tuple(n(0), m(2)) tuple(n(1), m(1)) tuple(n(1), m(2))");
+	}
+	
+	@Test
+	public void testPolyRewriter() {
+		assertEquals(parse("poly(2, m, n, o)"), "tuple(m(), n()) tuple(m(), o()) tuple(n(), o())");
+		assertEquals(parse("poly(2, m, n)"), "tuple(m(), n())");
+		assertEquals(parse("poly(1, m, n)"), "tuple(m()) tuple(n())");
+	}
+	
+	@Test
+	public void testPolyRewriterExtended() {
+		assertEquals(parse("poly#(2, m, n, o)"), "m() n() o() tuple(m(), n()) tuple(m(), o()) tuple(n(), o())");
 	}
 	
 

@@ -18,6 +18,7 @@ import org.antlr.runtime.tree.Tree;
 public class FeatureParser {
 	/**
 	 * Class for special type features like tuple
+	 * Special feature, used only by feature parser for special features representation
 	 * @author Anton Kazennikov
 	 *
 	 */
@@ -114,7 +115,8 @@ public class FeatureParser {
 
 		if(tree.getType() == FeaturesLanguageLexer.SIMPLE) {
 			FeatureFunction f = fb.get(name);
-			feat = new Feature(f, new Values.Var(), args);
+			feat = f != null? new Feature(f, new Values.Var(), args) : new Special(tree.getType(), name, args);
+			
 		} else {
 			feat = new Special(tree.getType(), name, args);
 		}
