@@ -10,6 +10,13 @@ public interface Value {
 	 * Get actual value object
 	 */
 	public Object get();
+
+    /**
+     * Get the value, casting it to given class
+     * @param cls target class value object
+     * @return value of class &lt;E&gt; or null, if the value is null
+     * or couldn't be cast to cls
+     */
 	public <E> E get(Class<E> cls);
 		
 	/**
@@ -17,7 +24,10 @@ public interface Value {
 	 * @return
 	 */
 	public boolean isSet();
-	
+
+    /**
+     * Settable object value interface
+     */
 	public interface Settable extends Value {
 		/**
 		 * Set actual value object
@@ -25,8 +35,11 @@ public interface Value {
 		 */
 		public void set(Object o);
 	}
-	
-	
+
+
+    /**
+     * Clearable object value interface
+     */
 	public interface Clearable extends Value {
 		/**
 		 * Clears value
@@ -40,7 +53,7 @@ public interface Value {
 	 *
 	 */
 	public interface Mutable extends Settable, Clearable {
-		
+
 	}
 
 }
