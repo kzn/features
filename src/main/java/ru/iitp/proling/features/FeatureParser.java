@@ -11,7 +11,11 @@ import org.antlr.runtime.tree.Tree;
 
 
 /**
- * Feature parser from simple definition syntax
+ * Feature parser from simple definition syntax.
+ *
+ * The the parser processes the features definition, it can create
+ * a Feature, or if the FeatureFunction is not found, it creates a
+ * Special tuple
  * @author ant
  *
  */
@@ -45,11 +49,15 @@ public class FeatureParser {
 	public FeatureParser(FeatureRegister fb) {
 		this.fb = fb;
 	}
+
+    public FeatureParser() {
+        fb = new FeatureRegister();
+    }
 	
 	
 	/**
-	 * Parses string definition
-	 * @param def actual definition
+	 * Parses feature extractor from string definition
+	 * @param def string definition
 	 * @return FeatureExtractor
 	 * @throws RecognitionException
 	 */
@@ -80,11 +88,7 @@ public class FeatureParser {
 	FeatureExtractor parse(Tree tree) {
 		FeatureExtractor eval = new FeatureExtractor();
 		Feature feats = parseFeature(tree);
-		
-		//List<Feature> feats = new ArrayList<Feature>();
-		
-		
-		
+
 		for(FeatureRewriter rewriter : eval.rewriters) {
 			feats = rewriter.rewrite(feats);
 		}
@@ -101,7 +105,6 @@ public class FeatureParser {
 	/**
 	 * Parses an antlr tree feature node to FeatureValue
 	 * @param tree feature node
-	 * @param eval
 	 * @return
 	 */
 	Feature parseFeature(Tree tree) {
@@ -172,5 +175,9 @@ public class FeatureParser {
 
 		return new Values.Const(sb.toString());
 	}
+
+    public FeatureRegister getFeatureRegister() {
+        return fb;
+    }
 
 }

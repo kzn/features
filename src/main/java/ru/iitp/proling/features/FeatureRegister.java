@@ -5,17 +5,19 @@ import java.util.Map;
 
 
 /**
- * Feature register that builds a feature from its name and arguments.
+ * Feature register stores feature functions definitions and
+ * is used to build a feature from its name and arguments.
  * 
  * To use a {@link FeatureFunction} class as a function one must register it in the builder
  * through the <code>register()</code> function.
  * 
  * <p>
- * By default, comes with registered {@link CommonFeatures.Tuple} class
+ * By default, comes with registered {@link CommonFeatures.Tuple}(tuple) and
+ * {@link CommonFeatures.Sequence}(seq) classes.
  * 
  * <p>
  * Contract: 
- * A suitable <@link Feature} class must have a constructor that accepts 
+ * A suitable {@link Feature} class must have a constructor that accepts
  * array of {@link Value} objects (a <code>Value[]</code> signature)
  *
  * @author Anton Kazennikov
@@ -43,7 +45,7 @@ public class FeatureRegister {
 	}
 	
 	/**
-	 * Function aliasing provider
+	 * Function aliasing provider. Provides an alias for existing function.
 	 * @author Anton Kazennikov
 	 *
 	 */
