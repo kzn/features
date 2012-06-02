@@ -3,18 +3,21 @@ package ru.iitp.proling.features;
 import java.util.List;
 
 /**
- * Function to extract feature from an object
+ * Function to extract some feature from an object
  * @author ant
  *
  */
 public interface FeatureFunction {
+    /**
+     * The provider provides a specific {@link FeatureFunction}
+     */
 	public interface Provider {
 		public FeatureFunction get();
 	}
 	
 	/**
-	 * This interface indicates that the first element of the feature
-	 * is an injected root element.
+	 * This interface indicates that the first argument of the feature function
+	 * is an injected element. The injected element is called the root element.
 	 * 
 	 * <p>
 	 * Suppose, there is a w(n) feature, that returns word from a sentence at 
@@ -34,7 +37,7 @@ public interface FeatureFunction {
 	public String name();
 		
 	/**
-	 * Evaluate feature and store result in a value object
+	 * Evaluate feature and store result in the given value object
 	 * @param res result value object
 	 */
 	public void eval(Value.Settable res, List<Value> args);
