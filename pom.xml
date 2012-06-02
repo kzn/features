@@ -12,69 +12,88 @@
   		<version>0.0.1-SNAPSHOT</version>
   	</dependency>
 	<dependency>
-  		<groupId>org.antlr</groupId>
-  		<artifactId>antlr</artifactId>
-  		<version>3.4</version>
+	    <groupId>org.antlr</groupId>
+	    <artifactId>antlr</artifactId>
+	    <version>3.4</version>
 	</dependency>
+
+	<dependency>
+	    <groupId>org.antlr</groupId>
+	    <artifactId>antlr-runtime</artifactId>
+	    <version>3.4</version>
+	</dependency>
+
 	<dependency>
 	    <groupId>com.google.guava</groupId>
-  		<artifactId>guava</artifactId>
-  		<version>12.0</version>
-	 </dependency>
-	    
-	 <dependency>
+	    <artifactId>guava</artifactId>
+	    <version>12.0</version>
+	</dependency>
+
+	<dependency>
 	    <groupId>junit</groupId>
-  		<artifactId>junit</artifactId>
-  		<version>4.10</version>
-	 </dependency>
-	    
+	    <artifactId>junit</artifactId>
+	    <version>4.10</version>
+	</dependency>
 
-  </dependencies>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>attach-sources</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+    </dependencies>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>attach-javadocs</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-		<extensions>
-			<!-- Enabling the use of FTP -->
-			<extension>
-				<groupId>org.apache.maven.wagon</groupId>
-				<artifactId>wagon-ssh-external</artifactId>
-			</extension>
-		</extensions>
-	</build>
-  
-  
-  
-   <distributionManagement>
-    <repository>
-      <id>iitp.cl.repo</id>
-      <name>IITP CL Lab repository</name>
-      <url>scpexe://cl.iitp.ru/maven</url>
-    </repository>
-  </distributionManagement>
+    <build>
+	<plugins>
+	    <plugin>
+		<groupId>org.antlr</groupId>
+		<artifactId>antlr3-maven-plugin</artifactId>
+		<version>3.4</version>
+		<executions>
+		    <execution>
+			<goals>
+			    <goal>antlr</goal>
+			</goals>
+		    </execution>
+		</executions>
+	    </plugin>
+	    <plugin>
+		<groupId>org.apache.maven.plugins</groupId>
+		<artifactId>maven-source-plugin</artifactId>
+		<executions>
+		    <execution>
+			<id>attach-sources</id>
+			<goals>
+			    <goal>jar</goal>
+			</goals>
+		    </execution>
+		</executions>
+	    </plugin>
+
+	    <plugin>
+		<groupId>org.apache.maven.plugins</groupId>
+		<artifactId>maven-javadoc-plugin</artifactId>
+		<executions>
+		    <execution>
+			<id>attach-javadocs</id>
+			<goals>
+			    <goal>jar</goal>
+			</goals>
+		    </execution>
+		</executions>
+	    </plugin>
+	</plugins>
+	<extensions>
+	    <!-- Enabling the use of FTP -->
+	    <extension>
+		<groupId>org.apache.maven.wagon</groupId>
+		<artifactId>wagon-ssh-external</artifactId>
+	    </extension>
+	</extensions>
+    </build>
+
+
+
+    <distributionManagement>
+	<repository>
+	    <id>iitp.cl.repo</id>
+	    <name>IITP CL Lab repository</name>
+	    <url>scpexe://cl.iitp.ru/maven</url>
+	</repository>
+    </distributionManagement>
 </project>
