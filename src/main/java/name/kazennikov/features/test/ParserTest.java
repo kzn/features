@@ -1,21 +1,22 @@
-package ru.iitp.proling.features.test;
+package name.kazennikov.features.test;
 
 import java.util.List;
 
 import junit.framework.TestCase;
+
+import name.kazennikov.features.CommonFeatures;
+import name.kazennikov.features.FeatureExtractor;
+import name.kazennikov.features.FeatureFunction;
+import name.kazennikov.features.FeatureParser;
+import name.kazennikov.features.FeatureRegister;
+import name.kazennikov.features.Value;
+import name.kazennikov.features.Value.Settable;
 
 import org.antlr.runtime.RecognitionException;
 import org.junit.Test;
 
 import com.google.common.base.Joiner;
 
-import ru.iitp.proling.features.CommonFeatures;
-import ru.iitp.proling.features.FeatureExtractor;
-import ru.iitp.proling.features.FeatureFunction;
-import ru.iitp.proling.features.FeatureParser;
-import ru.iitp.proling.features.FeatureRegister;
-import ru.iitp.proling.features.Value;
-import ru.iitp.proling.features.Value.Settable;
 
 public class ParserTest extends TestCase {
 	public static class SimpleFeat implements FeatureFunction {

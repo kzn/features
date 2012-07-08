@@ -1,4 +1,4 @@
-package ru.iitp.proling.features;
+package name.kazennikov.features;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
 
-import ru.iitp.proling.features.FeatureParser.Special;
 
 /**
  * AST Feature rewriter

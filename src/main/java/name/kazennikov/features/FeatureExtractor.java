@@ -1,4 +1,4 @@
-package ru.iitp.proling.features;
+package name.kazennikov.features;
 
 import java.util.ArrayList;
 import java.util.HashMap;

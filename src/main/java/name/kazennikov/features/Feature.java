@@ -1,8 +1,9 @@
-package ru.iitp.proling.features;
+package name.kazennikov.features;
 
 import java.util.List;
 
-import ru.iitp.proling.features.Values.Var;
+import name.kazennikov.features.Values.Var;
+
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Objects;

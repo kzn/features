@@ -1,8 +1,9 @@
-package ru.iitp.proling.features;
+package name.kazennikov.features;
 
 import java.util.List;
 
-import ru.iitp.proling.features.Value.Settable;
+import name.kazennikov.features.Value.Settable;
+
 
 public class FeatureFunctions {
 	/**

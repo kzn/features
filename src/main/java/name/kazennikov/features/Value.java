@@ -1,4 +1,4 @@
-package ru.iitp.proling.features;
+package name.kazennikov.features;
 
 /**
  * Generic object to store some value

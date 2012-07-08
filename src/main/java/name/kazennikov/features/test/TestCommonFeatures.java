@@ -1,14 +1,15 @@
-package ru.iitp.proling.features.test;
+package name.kazennikov.features.test;
 
 import junit.framework.TestCase;
+
+import name.kazennikov.features.FeatureExtractor;
+import name.kazennikov.features.FeatureFunctions;
+import name.kazennikov.features.FeatureParser;
+import name.kazennikov.features.FeatureRegister;
 
 import org.antlr.runtime.RecognitionException;
 import org.junit.Test;
 
-import ru.iitp.proling.features.FeatureExtractor;
-import ru.iitp.proling.features.FeatureFunctions;
-import ru.iitp.proling.features.FeatureParser;
-import ru.iitp.proling.features.FeatureRegister;
 
 public class TestCommonFeatures extends TestCase {
 

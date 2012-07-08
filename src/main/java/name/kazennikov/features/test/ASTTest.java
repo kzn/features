@@ -1,4 +1,7 @@
-package ru.iitp.proling.features.test;
+package name.kazennikov.features.test;
+
+import name.kazennikov.features.FeaturesLanguageLexer;
+import name.kazennikov.features.FeaturesLanguageParser;
 
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CharStream;
@@ -7,8 +10,6 @@ import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.tree.Tree;
 import org.junit.Test;
 
-import ru.iitp.proling.features.FeaturesLanguageLexer;
-import ru.iitp.proling.features.FeaturesLanguageParser;
 import junit.framework.TestCase;
 
 public class ASTTest extends TestCase {
