@@ -102,6 +102,7 @@ public class Values {
 
 		@Override
 		public void set(Object value) {
+			this.set = true;
 			this.value = value;
 		}
 
@@ -116,6 +117,7 @@ public class Values {
 		@Override
 		public void clear() {
 			set = false;
+			value = null;
 		}
 
 		@Override

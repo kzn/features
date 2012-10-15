@@ -73,12 +73,15 @@ public class FeatureExtractor {
 		List<String> feats = new ArrayList<String>();
 		StringBuilder sb = new StringBuilder();
 		for(int i = 0; i != f.size(); i++) {
-			Object v = f.get(i).get();
 			
-			if(v != null) {
+			Feature feat = f.get(i);
+			Object v = feat.get();
+			
+			if(feat.isSet()) {
+				
 				sb.setLength(0);
 				sb.append(i + 1).append('=');
-				sb.append(v.toString());
+				sb.append(v != null? v.toString() : "null");
 				feats.add(sb.toString());
 			}
 		}
