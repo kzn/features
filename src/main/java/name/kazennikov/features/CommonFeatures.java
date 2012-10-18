@@ -47,7 +47,7 @@ public class CommonFeatures {
 	
 	/**
 	 * Tuple feature that return a list of all its arguments.
-	 * If any of the arguments is null, the tuple returns null
+	 * The value is set only if all values of the tuple are set
 	 * @author Anton Kazennikov
 	 *
 	 */
@@ -60,8 +60,8 @@ public class CommonFeatures {
 			for(Value v : args) {
 				Object r = v.get();
 				
-				if(r == null) {
-					res.set(null);
+				if(!v.isSet()) {
+					//res.set(null);
 					return;
 				}
 				
