@@ -44,27 +44,6 @@ public class CommonFeatures {
 	}
 
 	
-	/**
-	 * Lowercase feature.
-	 * <p>
-	 * Accepts single argument: a String.<br>
-	 * Returns String in the lower case<br>
-	 * @author Anton Kazennikov
-	 *
-	 */
-	public static class LowerCase implements FeatureFunction {
-
-
-		@Override
-		public void eval(Value.Settable res, List<Value> args) {
-			res.set((args.get(0).get(String.class)).toLowerCase());
-		}
-
-		@Override
-		public String name() {
-			return "lo";
-		}		
-	}
 	
 	/**
 	 * Tuple feature that return a list of all its arguments.
