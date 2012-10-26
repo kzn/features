@@ -28,7 +28,7 @@ args: '(' arg (',' arg)* ')' -> arg+;
 
 feat_simple: SIMPLE (
 		     '(' arg (',' arg)* ')' -> ^(SIMPLE arg+)
-		     | -> ^(SIMPLE));
+		     | -> SIMPLE);
 
 array: '[' SIMPLE (',' SIMPLE)* ']' -> SIMPLE+;
 
@@ -38,15 +38,16 @@ simple_or_array: feat_simple (
 
 feat: simple_or_array
 	      ('{' feature+ '}' -> ^(TUPLE simple_or_array feature+)
-	      | -> ^(simple_or_array)
+	      | -> simple_or_array
 	      ) ;
+	      
 
 
 angle_pair: '<' arg (',' arg)+ '>' -> ^(SIMPLE["tuple"] arg+); 
 feature: feats |  angle_pair;
 feats: feat ( 
 	       (',' feat)+ -> ^(SIMPLE["tuple"] feat+)
-	       | -> ^(feat));
+	       | -> feat);
 
 WS: (' ' | '\t' | '\n' | '\r')+ { $channel = HIDDEN;};
 SINGLE_COMMENT: '//' ~('\r' | '\n')* {$channel = HIDDEN;};
