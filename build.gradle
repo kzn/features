@@ -17,8 +17,8 @@ repositories {
 
 
 dependencies {
-    compile 'net.sf.trove4j:trove4j:3.0.3'
-    compile 'com.google.guava:guava:${guavaVersion}'
+    compile "net.sf.trove4j:trove4j:$trove4jVersion"
+    compile "com.google.guava:guava:$guavaVersion"
 
     // FIXME: port to antlr4
 	compile 'org.antlr:antlr:3.5.2'
