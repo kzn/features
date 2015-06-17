@@ -1,0 +1,32 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'eclipse'
+apply from: 'https://raw.githubusercontent.com/kzn/gradle-utils/master/antlr3.gradle'
+
+if(project.hasProperty('standalone')) {
+    group = 'name.kazennikov'
+    description = "features"
+    version = '0.0.1-SNAPSHOT'
+}
+
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+
+dependencies {
+    compile 'net.sf.trove4j:trove4j:3.0.3'
+    compile 'com.google.guava:guava:${guavaVersion}'
+
+    // FIXME: port to antlr4
+	compile 'org.antlr:antlr:3.5.2'
+    compile 'org.antlr:antlr-runtime:3.5.2'
+	compile 'junit:junit:4.10'
+
+	compile project(':modules:common')
+	compile project(':modules:logger')
+	compile project(':modules:fsa')
+	
+}
